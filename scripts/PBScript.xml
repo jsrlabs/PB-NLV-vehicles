@@ -24,6 +24,7 @@
 
     <property> simulation/notify-time-trigger </property>
     <property value="1"> forces/hold-down </property>
+    <property value="1"> system/guidance/coast </property>
 
     <event name="First frame integrator setting">
       <condition>
@@ -84,6 +85,7 @@
       </description>
       <condition> simulation/sim-time-sec >= 0 </condition>
       <set name="fcs/throttle-cmd-norm[0]"  action="FG_RAMP" value="1.0" tc="0.1"/>
+      <set name="system/guidance/coast" action="step" value="0"/>
       <notify>
         <description>
           1st Stage Ignition
@@ -124,6 +126,7 @@
       <set name="inertia/pointmass-weight-lbs[34]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[35]" action="step" value="0"/>
       <!--set name="fcs/throttle-cmd-norm[0]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
+      <set name="system/guidance/coast" action="step" value="1"/>
       <notify>
         <description>
           Dropped first stage
@@ -138,6 +141,7 @@
       </description>
       <condition> simulation/sim-time-sec >= 117.1 </condition>
       <set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="1.0" tc="0.1"/>
+      <set name="system/guidance/coast" action="step" value="0"/>
       <notify>
         <description>
           2nd Stage Ignition
@@ -164,6 +168,7 @@
       <set name="inertia/pointmass-weight-lbs[19]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[13]" action="step" value="0"/>
       <!--set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
+      <set name="system/guidance/coast" action="step" value="1"/>
       <notify>
         <description>
           Dropped first stage
@@ -178,6 +183,7 @@
       </description>
       <condition> simulation/sim-time-sec >= 250.5 </condition>
       <set name="fcs/throttle-cmd-norm[2]"  action="FG_RAMP" value="1.0" tc="0.1"/>
+      <set name="system/guidance/coast" action="step" value="0"/>
       <notify>
         <description>
           3rd Stage Ignition

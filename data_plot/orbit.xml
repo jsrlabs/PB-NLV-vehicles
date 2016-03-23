@@ -55,7 +55,7 @@
     <label axis="y">Pitch (rad)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
-    <parameter axis="y">system/guidance/pitch_rate_table</parameter>
+    <parameter axis="y">system/guidance/pitch_rate_cmd_table</parameter>
   </plot>
   <plot>
     <title>Pitch error</title>
