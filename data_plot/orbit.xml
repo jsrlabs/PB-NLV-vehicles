@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<plotset>
+  <!--
+-->
+  <plot>
+    <title>Apogee Estimate</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Apogee estimate (miles)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">guidance/executive/apoapsis</parameter>
+  </plot>
+
+  <plot>
+    <title>Perigee Estimate</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Perigee estimate (miles)</label>
+    <scale>auto</scale>
+    <min axis="y">0</min>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">guidance/executive/periapsis</parameter>
+  </plot>
+
+  <plot>
+    <title>Altitude</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Altitude (ft)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">Altitude AGL (ft)</parameter>
+  </plot>
+
+  <plot>
+    <title>Attitude - Pitch, Roll, Yaw</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Pitch (rad)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">Theta (deg)</parameter>
+    <parameter axis="y">Phi (deg)</parameter>
+    <parameter axis="y">Psi (deg)</parameter>
+  </plot>
+  
+  <plot>
+    <title>Pitch guidance table</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Pitch (rad)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">system/guidance/pitch/linear_tangent_theta_table</parameter>
+  </plot>
+  <plot>
+    <title>Pitch error</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Pitch error (rad)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">system/guidance/pitch-error-rad</parameter>
+  </plot>
+
+  <plot>
+    <title>Pitch rate cmd</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Pitch (rad/sec)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">system/guidance/pitch-rate</parameter>
+  </plot>
+  <plot>
+    <title>Alpha</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Alpha (deg)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">Alpha (deg)</parameter>
+  </plot>
+
+  <plot>
+    <title>Thrust</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Thrust (lbs)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">F_{Prop x} (lbs)</parameter>
+  </plot>
+
+  <plot>
+    <title>Total Inertial Velocity</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Inertial Velocity (ft/sec)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">V_{Inertial} (ft/s)</parameter>
+  </plot>
+
+  <plot>
+    <title>Accel</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Acceleration (ft/s)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">BodyAccel_X</parameter>
+  </plot>
+
+</plotset>

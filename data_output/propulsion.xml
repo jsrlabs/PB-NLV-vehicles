@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<output name="propulsion.csv" type="CSV" rate="20">
+  <property> propulsion/engine[0]/pitch-angle-rad </property>
+  <property> propulsion/engine[0]/yaw-angle-rad </property>
+  <property> propulsion/engine[0]/thrust-lbs </property>
+
+  <property> propulsion/engine[1]/pitch-angle-rad </property>
+  <property> propulsion/engine[1]/yaw-angle-rad </property>
+  <property> propulsion/engine[1]/thrust-lbs </property>
+
+  <property> propulsion/engine[2]/pitch-angle-rad </property>
+  <property> propulsion/engine[2]/yaw-angle-rad </property>
+  <property> propulsion/engine[2]/thrust-lbs </property>
+
+  <property> propulsion/engine[3]/pitch-angle-rad </property>
+  <property> propulsion/engine[3]/yaw-angle-rad </property>
+  <property> propulsion/engine[3]/thrust-lbs </property>
+
+  <property> propulsion/engine[4]/pitch-angle-rad </property>
+  <property> propulsion/engine[4]/yaw-angle-rad </property>
+  <property> propulsion/engine[4]/thrust-lbs </property>
+
+  <property> propulsion/engine[5]/pitch-angle-rad </property>
+  <property> propulsion/engine[5]/yaw-angle-rad </property>
+  <property> propulsion/engine[5]/thrust-lbs </property>
+
+  <property> propulsion/engine[6]/pitch-angle-rad </property>
+  <property> propulsion/engine[6]/yaw-angle-rad </property>
+  <property> propulsion/engine[6]/thrust-lbs </property>
+
+  <property> propulsion/engine[7]/pitch-angle-rad </property>
+  <property> propulsion/engine[7]/yaw-angle-rad </property>
+  <property> propulsion/engine[7]/thrust-lbs </property>
+
+  <property> propulsion/engine[8]/pitch-angle-rad </property>
+  <property> propulsion/engine[8]/yaw-angle-rad </property>
+  <property> propulsion/engine[8]/thrust-lbs </property>
+
+  <property> propulsion/engine[9]/pitch-angle-rad </property>
+  <property> propulsion/engine[9]/yaw-angle-rad </property>
+  <property> propulsion/engine[9]/thrust-lbs </property>
+
+  <property> propulsion/engine[10]/pitch-angle-rad </property>
+  <property> propulsion/engine[10]/yaw-angle-rad </property>
+  <property> propulsion/engine[10]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[11]/pitch-angle-rad </property>
+  <property> propulsion/engine[11]/yaw-angle-rad </property>
+  <property> propulsion/engine[11]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[12]/pitch-angle-rad </property>
+  <property> propulsion/engine[12]/yaw-angle-rad </property>
+  <property> propulsion/engine[12]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[13]/pitch-angle-rad </property>
+  <property> propulsion/engine[13]/yaw-angle-rad </property>
+  <property> propulsion/engine[13]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[14]/pitch-angle-rad </property>
+  <property> propulsion/engine[14]/yaw-angle-rad </property>
+  <property> propulsion/engine[14]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[15]/pitch-angle-rad </property>
+  <property> propulsion/engine[15]/yaw-angle-rad </property>
+  <property> propulsion/engine[15]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[16]/pitch-angle-rad </property>
+  <property> propulsion/engine[16]/yaw-angle-rad </property>
+  <property> propulsion/engine[16]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[17]/pitch-angle-rad </property>
+  <property> propulsion/engine[17]/yaw-angle-rad </property>
+  <property> propulsion/engine[17]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[18]/pitch-angle-rad </property>
+  <property> propulsion/engine[18]/yaw-angle-rad </property>
+  <property> propulsion/engine[18]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[19]/pitch-angle-rad </property>
+  <property> propulsion/engine[19]/yaw-angle-rad </property>
+  <property> propulsion/engine[19]/thrust-lbs </property>
+
+  <property> propulsion/engine[20]/pitch-angle-rad </property>
+  <property> propulsion/engine[20]/yaw-angle-rad </property>
+  <property> propulsion/engine[20]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[21]/pitch-angle-rad </property>
+  <property> propulsion/engine[21]/yaw-angle-rad </property>
+  <property> propulsion/engine[21]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[22]/pitch-angle-rad </property>
+  <property> propulsion/engine[22]/yaw-angle-rad </property>
+  <property> propulsion/engine[22]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[23]/pitch-angle-rad </property>
+  <property> propulsion/engine[23]/yaw-angle-rad </property>
+  <property> propulsion/engine[23]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[24]/pitch-angle-rad </property>
+  <property> propulsion/engine[24]/yaw-angle-rad </property>
+  <property> propulsion/engine[24]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[25]/pitch-angle-rad </property>
+  <property> propulsion/engine[25]/yaw-angle-rad </property>
+  <property> propulsion/engine[25]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[26]/pitch-angle-rad </property>
+  <property> propulsion/engine[26]/yaw-angle-rad </property>
+  <property> propulsion/engine[26]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[27]/pitch-angle-rad </property>
+  <property> propulsion/engine[27]/yaw-angle-rad </property>
+  <property> propulsion/engine[27]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[28]/pitch-angle-rad </property>
+  <property> propulsion/engine[28]/yaw-angle-rad </property>
+  <property> propulsion/engine[28]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[29]/pitch-angle-rad </property>
+  <property> propulsion/engine[29]/yaw-angle-rad </property>
+  <property> propulsion/engine[29]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[30]/pitch-angle-rad </property>
+  <property> propulsion/engine[30]/yaw-angle-rad </property>
+  <property> propulsion/engine[30]/thrust-lbs </property>
+
+  <property> propulsion/engine[31]/pitch-angle-rad </property>
+  <property> propulsion/engine[31]/yaw-angle-rad </property>
+  <property> propulsion/engine[31]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[32]/pitch-angle-rad </property>
+  <property> propulsion/engine[32]/yaw-angle-rad </property>
+  <property> propulsion/engine[32]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[33]/pitch-angle-rad </property>
+  <property> propulsion/engine[33]/yaw-angle-rad </property>
+  <property> propulsion/engine[33]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[34]/pitch-angle-rad </property>
+  <property> propulsion/engine[34]/yaw-angle-rad </property>
+  <property> propulsion/engine[34]/thrust-lbs </property>
+                               
+  <property> propulsion/engine[35]/pitch-angle-rad </property>
+  <property> propulsion/engine[35]/yaw-angle-rad </property>
+  <property> propulsion/engine[35]/thrust-lbs </property>
+</output>

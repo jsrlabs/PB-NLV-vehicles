@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<system name="Executive Functions">
+
+  <!-- 
+  The channels below are simply a way to group components that have a common overall function.
+  The first channel calculates certain elapsed times that can be used later. Not all of them
+  are currently used, and some may not be. They could be used, for instance, if pitch guidance
+  was given as a pitch angle as a function of elapsed time. It is common, for instance, for the
+  uphill climb to orbit to be given as a simple open loop function where theta (pitch) angle is
+  a function of some time - or rather a normalized t-prime, with the elapsed time divided by the
+  total powered flight time being the controlling term. Such an algorithm (linear tangent pitch
+  steering) is described in the document here: http://www.dtic.mil/dtic/tr/fulltext/u2/643209.pdf.
+  See page 12, (equation 20).
+  
+  Currently in this file, however, ascent guidance is simpler, with a simple pitch rate given as
+  the target.
+  -->
+  <property value="0">   guidance/executive/mode </property>
+  <property value="0">   guidance/constant/grav_turn_time </property>
+  <property value="380"> guidance/constant/total_burn_time </property>
+
+
+  <!-- ##################################################################### -->
+  <!-- Timers -->
+  <!-- ##################################################################### -->
+  
+  <channel name="GNC Executive MET Clock">
+
+    <switch name="guidance/executive/launch-time">
+      <description>
+        This component acts as a sort of sample and hold at the time of liftoff, storing
+        in the property "guidance/executive/launch-time" the simulation elapsed time when
+        the engines throttle goes above 0.
+      </description>
+      <default value="simulation/sim-time-sec"/>
+      <test value="guidance/executive/launch-time"> fcs/throttle-cmd-norm[0] gt 0 </test>
+    </switch>
+
+    <summer name="guidance/executive/MET">
+      <description>
+        This component stores in the property "guidance/executive/MET" the mission elapsed
+        time since T-0.
+      </description>
+      <input>  simulation/sim-time-sec        </input>
+      <input> -guidance/executive/launch-time </input>
+    </summer>
+
+    <switch name="guidance/executive/gravity-turn-time">
+      <description>
+        This component acts as a sort of sample and hold at the time the gravity turn begins,
+        storing in the property "guidance/executive/gravity-turn-time" the simulation elapsed time 
+        since .
+      </description>
+      <default value="guidance/executive/MET"/>
+      <test value="guidance/executive/gravity-turn-time"> guidance/executive/MET ge guidance/constant/grav_turn_time </test>
+    </switch>
+
+    <summer name="guidance/executive/ETGT">
+      <description>
+        This component stores in the property "guidance/executive/ETGT" the mission elapsed
+        time since the gravity turn began.
+      </description>
+      <input>  guidance/executive/MET        </input>
+      <input> -guidance/executive/gravity-turn-time </input>
+    </summer>
+
+  </channel>
+
+  <!-- ##################################################################### -->
+  <!-- Modes -->
+  <!-- ##################################################################### -->
+
+  <!--channel name="Executive Guidance and Control Modes">
+
+    <distributor name="guidance/executive/mode" type="exclusive">
+
+      <case>
+        <description>
+            
+        </description>
+        <test logic="AND">
+          simulation/sim-time-sec gt guidance/constant/grav_turn_time
+          guidance/executive/mode eq 0
+        </test>
+        <property value="1"> guidance/executive/mode </property>
+      </case>
+
+    </distributor>
+      
+  </channel-->
+
+</system>

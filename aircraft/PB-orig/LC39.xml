@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<initialize name="LC39" version="2.0">
+  <!--
+    This file sets up the spacecraft in a hig inclination elliptical orbit.
+  -->
+
+  <position frame="ECEF">
+    <latitude type="geodetic" unit="DEG">   28.6272  </latitude>
+    <longitude unit="DEG"> -80.6208  </longitude>
+    <altitudeAGL unit="IN">   77.64 </altitudeAGL>
+  </position>
+
+  <orientation unit="DEG" frame="LOCAL">
+    <roll>   0 </roll>
+    <yaw>   90 </yaw>
+    <pitch> 90 </pitch>
+  </orientation>
+
+  <velocity unit="KM/SEC" frame="LOCAL">
+    <x> 0 </x>
+    <y> 0 </y>
+    <z> 0 </z>
+  </velocity>
+
+  <attitude_rate unit="DEG/SEC" frame="LOCAL">
+    <x>  0.0 </x>
+    <y>  0.0 </y>
+    <z>  0.0 </z>
+  </attitude_rate>
+
+</initialize>

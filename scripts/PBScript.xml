@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sf.net/JSBSimScript.xsl"?>
+<runscript xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://jsbsim.sf.net/JSBSimScript.xsd"
+    name="PB">
+  <description>
+    This script controls the PB rocket in subdirectory aircraft/PB. The initial conditions are in LC39.xml
+    in the same subdirectory. 
+    
+    The run length is determined by the "end" time given in the "run" element, below. The "start" 
+    attribute has no effect at this time. The "dt" value is the frame delta T (inverse of
+    frame rate in Hz). There are events for the first three frames that starts up the integrators.
+    
+    The vehicle is held down until thrust is greater than weight. This is approximated by releasing
+    the holddown at 0.1 seconds. The engines are ignited at 0 seconds.
+    
+    The events "Staging 1" and "Staging 2" set the "expended" stages masses to 0. Stage X ignition starts
+    the relevant stage engines.
+    
+  </description>
+  
+  <use aircraft="PB" initialize="LC39"/>
+  <run start="0.0" end="400" dt="0.0083333333333333333">
+
+    <property> simulation/notify-time-trigger </property>
+    <property value="1"> forces/hold-down </property>
+
+    <event name="First frame integrator setting">
+      <condition>
+        simulation/frame eq 0
+      </condition>
+      <set name="simulation/integrator/rate/rotational" value="2"></set>
+      <set name="simulation/integrator/position/rotational" value="2"></set>
+      <set name="simulation/integrator/rate/translational" value="2"></set>
+      <set name="simulation/integrator/position/translational" value="2"></set>
+    </event>
+    
+    <event name="Second frame integrator setting">
+      <condition>
+        simulation/frame eq 1
+      </condition>
+      <set name="simulation/integrator/rate/rotational" value="3"></set>
+      <set name="simulation/integrator/position/rotational" value="3"></set>
+      <set name="simulation/integrator/rate/translational" value="3"></set>
+      <set name="simulation/integrator/position/translational" value="3"></set>
+    </event>
+    
+    <event name="Third frame integrator setting">
+      <condition>
+        simulation/frame eq 2
+      </condition>
+      <set name="simulation/integrator/rate/rotational" value="4"></set>
+      <set name="simulation/integrator/position/rotational" value="4"></set>
+      <set name="simulation/integrator/rate/translational" value="4"></set>
+      <set name="simulation/integrator/position/translational" value="4"></set>
+    </event>
+
+    <event name="Vehicle state:" persistent="true">
+      <description>Output message at 10 second intervals</description>
+      <notify>
+        <description>Vehicle state:</description>
+        <property caption="ECI Velocity (fps):      "> velocities/eci-velocity-mag-fps </property>
+        <property caption="Altitude AGL (ft):       "> position/h-agl-ft </property>
+        <property caption="Alpha (deg):             "> aero/alpha-deg </property>
+        <property caption="Thetadot (rad/sec):      "> velocities/thetadot-rad_sec </property>
+        <property caption="Roll angle (rad):        "> attitude/phi-rad </property>
+        <property caption="Pitch angle (rad):       "> attitude/theta-rad </property>
+        <property caption="Heading (rad):           "> attitude/psi-rad </property>
+        <property caption="Hold-down discrete:      "> forces/hold-down </property>
+        <property caption="First stage throttle:    "> fcs/throttle-cmd-norm[0] </property>
+        <property caption="Second stage throttle:   "> fcs/throttle-cmd-norm[1] </property>
+        <property caption="Orbital apogee (miles):  "> guidance/executive/apoapsis </property>
+        <property caption="Orbital perigee (miles): "> guidance/executive/periapsis </property>
+        <property caption="Orbital eccentricity:    "> guidance/executive/eccentricity </property>
+      </notify>
+      <condition> simulation/sim-time-sec >= simulation/notify-time-trigger </condition>
+      <set name="simulation/notify-time-trigger" value="1000" type="delta"/>
+    </event>
+
+    <event name="Stage 1 Ignition">
+      <description>
+        Fire engines for first stage
+        First stage engine *item* indexes are: 0,1,2,3,4,5,6,11,12,17,18,23,24,29,30,31,32,33,34,35
+      </description>
+      <condition> simulation/sim-time-sec >= 0 </condition>
+      <set name="fcs/throttle-cmd-norm[0]"  action="FG_RAMP" value="1.0" tc="0.1"/>
+      <notify>
+        <description>
+          1st Stage Ignition
+        </description>
+      </notify>
+    </event>
+
+    <event name="Hold Down Release">
+      <condition> simulation/sim-time-sec >= 0.1 </condition>
+      <set name="forces/hold-down" value="0"/>
+      <notify/>
+    </event>
+
+    <event name="Staging 1">
+      <description>
+        This event sets the masses of the first stage structure to zero and performs other tasks
+        related to setting the vehicle up for second stage flight.
+      </description>
+      <condition> simulation/sim-time-sec >= 114.1 </condition>
+      <set name="inertia/pointmass-weight-lbs[0]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[1]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[2]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[3]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[4]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[5]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[6]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[11]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[12]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[17]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[18]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[23]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[24]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[29]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[30]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[31]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[32]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[33]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[34]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[35]" action="step" value="0"/>
+      <!--set name="fcs/throttle-cmd-norm[0]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
+      <notify>
+        <description>
+          Dropped first stage
+        </description>
+      </notify>
+    </event>
+
+    <event name="Stage 2 Ignition">
+      <description>
+        Fire engines for second stage
+        Second stage engine *item* indexes are: 7,8,9,10,16,22,28,27,26,25,19,13
+      </description>
+      <condition> simulation/sim-time-sec >= 117.1 </condition>
+      <set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="1.0" tc="0.1"/>
+      <notify>
+        <description>
+          2nd Stage Ignition
+        </description>
+      </notify>
+    </event>
+
+    <event name="Staging 2">
+      <description>
+        This event sets the masses of the second stage structure to zero and performs other tasks
+        related to setting the vehicle up for third stage flight.
+      </description>
+      <condition> simulation/sim-time-sec >= 247.5 </condition>
+      <set name="inertia/pointmass-weight-lbs[7]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[8]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[9]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[10]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[16]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[22]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[28]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[27]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[26]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[25]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[19]" action="step" value="0"/>
+      <set name="inertia/pointmass-weight-lbs[13]" action="step" value="0"/>
+      <!--set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
+      <notify>
+        <description>
+          Dropped first stage
+        </description>
+      </notify>
+    </event>
+
+    <event name="Stage 3 Ignition">
+      <description>
+        Fire engines for third stage
+        Third stage engine *item* indexes are: 14, 15, 20, 21
+      </description>
+      <condition> simulation/sim-time-sec >= 250.5 </condition>
+      <set name="fcs/throttle-cmd-norm[2]"  action="FG_RAMP" value="1.0" tc="0.1"/>
+      <notify>
+        <description>
+          3rd Stage Ignition
+        </description>
+      </notify>
+    </event>
+
+  </run>
+
+</runscript>

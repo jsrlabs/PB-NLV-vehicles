@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<nozzle name="PB_Nozzle">
+  <!--
+    area    = Nozzle exit area, sqft.
+    Nozzle exit area is calculated from a 4" diameter nozzle
+  -->
+  <area unit="FT2"> 0.01 </area>
+</nozzle>

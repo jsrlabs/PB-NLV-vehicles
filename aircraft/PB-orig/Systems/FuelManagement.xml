@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<system name="Fuel Management System">
+
+  <!-- This term can range from 0 to 1, and it represents the fill percent
+        of the tank above which the flow rate is a constant 1. For example
+        a value of 0.3 specifies that while the tank is filled at 30% or
+        greater of capacity, the flow rate will be 100% of maximum nominal, where
+        the maximum nominal flow rate is specified in the engine XML file. Note
+        that the tank may start off already only half full (50%). -->
+  <property value="0.40"> system/fms/stage1_fuel_tank_const_flow_fill_pct  </property>
+  <property value="0.40"> system/fms/stage2_fuel_tank_const_flow_fill_pct  </property>
+  <property value="0.40"> system/fms/stage3_fuel_tank_const_flow_fill_pct  </property>
+    
+  <!-- This parameter "system/fms/stage1_empty_fuel_tank_flow_pct" specifies the percentage
+        of the maximum flow rate that is modeled when the tank is empty. For example,
+        a value of 0.41 means that when the tank is empty the propellant flow rate will
+        be 41% of the nominal flow rate. 
+  -->
+
+  <property value="0.41"> system/fms/stage1_empty_fuel_tank_flow_pct </property>
+  <property value="0.41"> system/fms/stage2_empty_fuel_tank_flow_pct </property>
+  <property value="0.41"> system/fms/stage3_empty_fuel_tank_flow_pct </property>
+
+  <channel name="Tank Flow Rates">
+      
+    <fcs_function name="system/fms/stage1_fuel_flow_rate_factor">
+      <!--
+            This is the calculation that controls what percentage of the
+        maximum fuel flow rate (specified in the engine file, PB_Engine.xml)
+        will be used. The throttle setting (which goes from 0 to 1) will
+        be multiplied with this factor.
+            Currently in JSBSim, we can only set the throttle and the maximum
+        propellant flow rates to control actual flow rate at any time. It
+        would be nice to be able to use actual pressurization numbers and
+        do a more physical model, but that's not currently feasible in
+        JSBSim code itself, although here in these equations we could do
+        something similar, but let's just keep it simple, for now.
+            Note: This function only interpolates from a maximum value, to
+        a minimum value, with a maximum limit in place. Physically, it is 
+        meant to model the ullage pressure in a tank that is half full
+        initially, and which linearly reduces to a final pressure of
+        roughly half of what it was initially (perfect gas law). A 
+        limiter could be in place to keep the flow rate constant until
+        the pressure falls below a threshold value.
+            The output from this function is the throttle *position* for the
+        engine. The throttle command is input. THe throttle command goes from 0 to 1.
+            This function assumes that all tanks deplete at the same rate (both
+        oxidizer and fuel) as far as *percentage* fill goes, so the 1st fuel
+        tank is used as the "indexer" tank to determine current fill 
+        quantity.
+          
+        flow_rate_factor = current_fill_percent * [(1 - empty_flow_pct) / const_flow_fill_pct] + empty_flow_pct
+        throttle_position = throttle_command * minimum(1, flow_rate_factor)
+      -->
+      <function>
+        <product>
+          <property> fcs/throttle-cmd-norm[0] </property>
+          <min>
+            <value> 1 </value>
+            <sum>
+              <quotient>
+                <product>
+                  <quotient>
+                    <property> propulsion/tank[1]/pct-full </property>
+                    <value> 100 </value>
+                  </quotient>
+                  <difference>
+                    <value> 1 </value>
+                    <property> system/fms/stage1_empty_fuel_tank_flow_pct </property>
+                  </difference>
+                </product>
+                <property> system/fms/stage1_fuel_tank_const_flow_fill_pct </property>
+              </quotient>
+              <property> system/fms/stage1_empty_fuel_tank_flow_pct </property>
+            </sum>
+          </min>
+        </product>
+      </function>
+      <output> fcs/throttle-pos-norm[0] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[1] </output>
+      <output> fcs/throttle-pos-norm[2] </output>
+      <output> fcs/throttle-pos-norm[3] </output>
+      <output> fcs/throttle-pos-norm[4] </output>
+      <output> fcs/throttle-pos-norm[5] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[6] </output>
+      <output> fcs/throttle-pos-norm[11] </output>
+      <output> fcs/throttle-pos-norm[12] </output>
+      <output> fcs/throttle-pos-norm[17] </output>
+      <output> fcs/throttle-pos-norm[18] </output>
+      <output> fcs/throttle-pos-norm[23] </output>
+      <output> fcs/throttle-pos-norm[24] </output>
+      <output> fcs/throttle-pos-norm[29] </output>
+      <output> fcs/throttle-pos-norm[30] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[31] </output>
+      <output> fcs/throttle-pos-norm[32] </output>
+      <output> fcs/throttle-pos-norm[33] </output>
+      <output> fcs/throttle-pos-norm[34] </output>
+      <output> fcs/throttle-pos-norm[35] </output> <!-- vectorable -->
+    </fcs_function>
+
+    <fcs_function name="system/fms/stage2_fuel_flow_rate_factor">
+      <!--
+      See explanation above for stage 1
+      -->
+      <function>
+        <product>
+          <property> fcs/throttle-cmd-norm[1] </property>
+          <min>
+            <value> 1 </value>
+            <sum>
+              <quotient>
+                <product>
+                  <quotient>
+                    <property> propulsion/tank[15]/pct-full </property>
+                    <value> 100 </value>
+                  </quotient>
+                  <difference>
+                    <value> 1 </value>
+                    <property> system/fms/stage2_empty_fuel_tank_flow_pct </property>
+                  </difference>
+                </product>
+                <property> system/fms/stage2_fuel_tank_const_flow_fill_pct </property>
+              </quotient>
+              <property> system/fms/stage2_empty_fuel_tank_flow_pct </property>
+            </sum>
+          </min>
+        </product>
+      </function>
+      <output> fcs/throttle-pos-norm[7] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[8] </output>
+      <output> fcs/throttle-pos-norm[9] </output>
+      <output> fcs/throttle-pos-norm[10] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[16] </output>
+      <output> fcs/throttle-pos-norm[22] </output>
+      <output> fcs/throttle-pos-norm[28] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[27] </output>
+      <output> fcs/throttle-pos-norm[26] </output>
+      <output> fcs/throttle-pos-norm[25] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[19] </output>
+      <output> fcs/throttle-pos-norm[13] </output>
+    </fcs_function>
+      
+    <fcs_function name="system/fms/stage3_fuel_flow_rate_factor">
+      <!--
+      See explanation above for stage 1
+      -->
+      <function>
+        <product>
+          <property> fcs/throttle-cmd-norm[2] </property>
+          <min>
+            <value> 1 </value>
+            <sum>
+              <quotient>
+                <product>
+                  <quotient>
+                    <property> propulsion/tank[29]/pct-full </property>
+                    <value> 100 </value>
+                  </quotient>
+                  <difference>
+                    <value> 1 </value>
+                    <property> system/fms/stage3_empty_fuel_tank_flow_pct </property>
+                  </difference>
+                </product>
+                <property> system/fms/stage3_fuel_tank_const_flow_fill_pct </property>
+              </quotient>
+              <property> system/fms/stage3_empty_fuel_tank_flow_pct </property>
+            </sum>
+          </min>
+        </product>
+      </function>
+      <output> fcs/throttle-pos-norm[14] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[15] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[20] </output> <!-- vectorable -->
+      <output> fcs/throttle-pos-norm[21] </output> <!-- vectorable -->
+    </fcs_function>
+
+  </channel>
+
+</system>

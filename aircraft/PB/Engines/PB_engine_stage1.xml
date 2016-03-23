@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+  File:     PB_Engine.xml
+  Author:   Jon Berndt, for Paul Breed
+
+  Inputs:
+    Name:           PB
+    Type:           rocket
+    Thrust:          lbf
+    Propellants     
+    Propellant flow rate (est.):  lbs/sec
+    Mixture Ratio    (by mass, Ox/Fuel)
+    Ox. Flow Rate (SL) 
+    Fuel Flow Rate (SL) 
+    Lox-HC Mol Wt.  
+    Flame temp      
+    Chamber Pressure  psia
+    ISP (sea level) 200
+    ISP (vacuum)    295
+    Weight           lbm
+    Thrust Weight   
+    Length/Diameter  feet
+    Nozzle Exp. Ratio 
+    Nozzle exit velocity  ft/sec
+    Nozzle exit pressure 14.7 psi (2117 psf)
+
+    Throttleable Control  40% - 100% ??
+    Mixture Ratio Control  Yes
+
+-->
+
+<rocket_engine name="PB_Engine_stage1">
+  <isp>                   230 </isp>
+  <sloxiflowmax unit="LBS/SEC">  0.639   </sloxiflowmax>
+  <slfuelflowmax unit="LBS/SEC"> 0.091   </slfuelflowmax>
+</rocket_engine>

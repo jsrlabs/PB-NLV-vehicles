@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<system name="Second Stage Guidance and Control">
+
+  <!-- 
+  There is no formal *guidance* yet. Instead, the target yaw rate is simply set to 0, and the target
+  pitch rate (system/constant/pitch-rate) is set in the Executive file. Until the gravity turn time
+  the pitch rate is set to 0. After that, the pitch rate is set and the error between the actual pitch
+  rate and the target rate is determined. This error signal is passed through a PID controller which
+  has been hand-tuned. The output from the PID controller drives the four corner actuators on the
+  stage. The output from the PID controller is limited to 0.0873 radians (5 degrees). TVC is modeled at 
+  bottom, with the actuator properties being set. The actuator properties are:
+
+  propulsion/engine[0]/pitch-angle-rad 
+  propulsion/engine[5]/pitch-angle-rad 
+  propulsion/engine[30]/pitch-angle-rad
+  propulsion/engine[35]/pitch-angle-rad
+
+  propulsion/engine[0]/yaw-angle-rad 
+  propulsion/engine[5]/yaw-angle-rad 
+  propulsion/engine[30]/yaw-angle-rad
+  propulsion/engine[35]/yaw-angle-rad
+
+  These parameters control the actual force direction for the associated engine. Note that the actuator
+  is rate-limited.
+  -->
+  
+    <!-- ########################################################## 2nd Stage Pitch Guidance Channel -->
+
+  
+    <!-- ########################################################## 2nd Stage Roll Guidance Channel  -->
+    <channel name="Second Stage Roll Guidance">
+      
+      
+    </channel>
+    
+    <!-- ########################################################## 2nd Stage Yaw Guidance Channel   -->
+    <channel name="Second Stage Yaw Guidance">
+      
+      
+    </channel>
+    
+    <!-- ########################################################## 2nd Stage Pitch Control Channel -->
+
+    <channel name="Second Stage Pitch Rate Control">
+
+      <summer name="system/control/stage2-pitch-rate-error-rad_sec">
+        <input> system/constant/pitch-rate </input>
+        <input> -velocities/q-rad_sec </input>
+      </summer>
+
+      <pid name="system/control/stage2-pitch-rate-cmd-rad_sec" type="standard">
+        <input> system/control/stage2-pitch-rate-error-rad_sec </input>
+        <kp> -0.014 </kp>
+        <ki>  0.008 </ki>
+        <kd>  0.0   </kd>
+        <clipto>
+          <min> -0.0873 </min> <!-- limited to +/-5 degrees -->
+          <max>  0.0873 </max>
+        </clipto>
+      </pid>
+
+      <switch name="system/control/stage2-pitch-rate-cmd-final-rad_sec">
+        <default value="0"/>
+        <test value="system/control/stage2-pitch-rate-cmd-rad_sec">
+          fcs/throttle-pos-norm[7] gt 0
+        </test>
+      </switch>
+     
+    </channel>
+    
+    <!-- ########################################################## 2nd Stage Roll Control Channel  -->
+    <channel name="Second Stage Roll Control">
+      
+      
+    </channel>
+
+    <!-- ########################################################## 2nd Stage Yaw Control Channel   -->
+    <channel name="Second Stage Yaw Control">
+      
+      <summer name="system/control/stage2-yaw-rate-error-rad_sec">
+        <bias> 0 </bias>
+        <input> -velocities/r-rad_sec </input>
+      </summer>
+
+      <pid name="system/control/stage2-yaw-rate-cmd-rad_sec" type="standard">
+        <input> system/control/stage2-yaw-rate-error-rad_sec </input>
+        <kp> -3.6 </kp>
+        <ki>  0.1 </ki>
+        <kd>  0.0 </kd>
+        <clipto>
+          <min> -0.0873 </min> <!-- limited to +/-5 degrees -->
+          <max>  0.0873 </max>
+        </clipto>
+      </pid>
+      
+      <switch name="system/control/stage2-yaw-rate-cmd-final-rad_sec">
+        <default value="0"/>
+        <test value="system/control/stage2-yaw-rate-cmd-rad_sec">
+          fcs/throttle-pos-norm[7] gt 0
+        </test>
+      </switch>
+      
+    </channel>
+
+    <!-- ########################################################## 2nd Stage Thrust Vector Control Channel -->
+    <channel name="Second Stage Thrust Vector Control">
+
+      <actuator name="systems/actuator/engine[1]/pitch-rad">
+        <input> system/control/stage2-pitch-rate-cmd-final-rad_sec </input>
+        <rate_limit> 0.233 </rate_limit>                          <!-- 10 degrees total in 0.75 sec              -->
+        <!--hysteresis_width> 0.0035 </hysteresis_width-->        <!--  2% of total 10 degree travel, in radians -->
+        <output> propulsion/engine[7]/pitch-angle-rad  </output>
+        <output> propulsion/engine[10]/pitch-angle-rad </output>
+        <output> propulsion/engine[28]/pitch-angle-rad </output>
+        <output> propulsion/engine[25]/pitch-angle-rad </output>
+      </actuator>
+      
+      <actuator name="systems/actuator/engine[1]/yaw-rad">
+        <input> system/control/stage2-yaw-rate-cmd-final-rad_sec </input>
+        <rate_limit> 0.233 </rate_limit>                     <!-- 10 degrees total in 0.75 sec              -->
+        <!--hysteresis_width> 0.0035 </hysteresis_width-->        <!--  2% of total 10 degree travel, in radians -->
+        <output> propulsion/engine[7]/yaw-angle-rad </output>
+        <output> propulsion/engine[10]/yaw-angle-rad </output>
+        <output> propulsion/engine[28]/yaw-angle-rad </output>
+        <output> propulsion/engine[25]/yaw-angle-rad </output>
+      </actuator>
+
+    </channel>
+    
+</system>
