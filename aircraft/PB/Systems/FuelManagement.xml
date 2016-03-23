@@ -7,9 +7,9 @@
         greater of capacity, the flow rate will be 100% of maximum nominal, where
         the maximum nominal flow rate is specified in the engine XML file. Note
         that the tank may start off already only half full (50%). -->
-  <property value="0.40"> system/fms/stage1_fuel_tank_const_flow_fill_pct  </property>
-  <property value="0.40"> system/fms/stage2_fuel_tank_const_flow_fill_pct  </property>
-  <property value="0.40"> system/fms/stage3_fuel_tank_const_flow_fill_pct  </property>
+  <property value="0.50"> system/fms/stage1_fuel_tank_const_flow_fill_pct  </property>
+  <property value="0.50"> system/fms/stage2_fuel_tank_const_flow_fill_pct  </property>
+  <property value="0.50"> system/fms/stage3_fuel_tank_const_flow_fill_pct  </property>
     
   <!-- This parameter "system/fms/stage1_empty_fuel_tank_flow_pct" specifies the percentage
         of the maximum flow rate that is modeled when the tank is empty. For example,
