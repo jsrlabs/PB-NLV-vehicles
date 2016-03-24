@@ -25,6 +25,9 @@
     <property> simulation/notify-time-trigger </property>
     <property value="1"> forces/hold-down </property>
     <property value="1"> system/guidance/coast </property>
+    <property value="3.0"> system/guidance/coast-time </property>
+    <property value="20000.0"> simulation/stage2-ignition-time-sec </property>
+    <property value="30000.0"> simulation/stage3-ignition-time-sec </property>
 
     <event name="First frame integrator setting">
       <condition>
@@ -104,7 +107,10 @@
         This event sets the masses of the first stage structure to zero and performs other tasks
         related to setting the vehicle up for second stage flight.
       </description>
-      <condition> simulation/sim-time-sec >= 114.1 </condition>
+      <condition>
+	simulation/sim-time-sec >= 10
+	propulsion/engine[0]/thrust-lbs lt 1.0
+      </condition>
       <set name="inertia/pointmass-weight-lbs[0]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[1]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[2]" action="step" value="0"/>
@@ -127,6 +133,14 @@
       <set name="inertia/pointmass-weight-lbs[35]" action="step" value="0"/>
       <!--set name="fcs/throttle-cmd-norm[0]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
       <set name="system/guidance/coast" action="step" value="1"/>
+      <set name="simulation/stage2-ignition-time-sec" action="step">
+	<function>
+	  <sum>
+	    <property> simulation/sim-time-sec </property>
+	    <property> system/guidance/coast-time </property>
+	  </sum>
+	</function>
+      </set>
       <notify>
         <description>
           Dropped first stage
@@ -139,7 +153,9 @@
         Fire engines for second stage
         Second stage engine *item* indexes are: 7,8,9,10,16,22,28,27,26,25,19,13
       </description>
-      <condition> simulation/sim-time-sec >= 117.1 </condition>
+      <condition>
+	simulation/sim-time-sec >= simulation/stage2-ignition-time-sec
+      </condition>
       <set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="1.0" tc="0.1"/>
       <set name="system/guidance/coast" action="step" value="0"/>
       <notify>
@@ -154,7 +170,10 @@
         This event sets the masses of the second stage structure to zero and performs other tasks
         related to setting the vehicle up for third stage flight.
       </description>
-      <condition> simulation/sim-time-sec >= 247.5 </condition>
+      <condition>
+	simulation/sim-time-sec >= 150
+	propulsion/engine[7]/thrust-lbs lt 1.0
+      </condition>
       <set name="inertia/pointmass-weight-lbs[7]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[8]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[9]" action="step" value="0"/>
@@ -169,9 +188,17 @@
       <set name="inertia/pointmass-weight-lbs[13]" action="step" value="0"/>
       <!--set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
       <set name="system/guidance/coast" action="step" value="1"/>
+      <set name="simulation/stage3-ignition-time-sec" action="step">
+	<function>
+	  <sum>
+	    <property> simulation/sim-time-sec </property>
+	    <property> system/guidance/coast-time </property>
+	  </sum>
+	</function>
+      </set>
       <notify>
         <description>
-          Dropped first stage
+          Dropped second stage
         </description>
       </notify>
     </event>
@@ -181,7 +208,7 @@
         Fire engines for third stage
         Third stage engine *item* indexes are: 14, 15, 20, 21
       </description>
-      <condition> simulation/sim-time-sec >= 250.5 </condition>
+      <condition> simulation/sim-time-sec >= simulation/stage3-ignition-time-sec </condition>
       <set name="fcs/throttle-cmd-norm[2]"  action="FG_RAMP" value="1.0" tc="0.1"/>
       <set name="system/guidance/coast" action="step" value="0"/>
       <notify>
