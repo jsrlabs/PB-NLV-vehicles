@@ -15,14 +15,7 @@
   <!ENTITY ENGINE_ROW4_Z "  2.25">
   <!ENTITY ENGINE_ROW5_Z "  6.75">
   <!ENTITY ENGINE_ROW6_Z " 11.25">
-  <!ENTITY OXI_TANK_CENTROID_STATION  " 88.60">
-  <!ENTITY OXI_TANK_DRAIN_STATION     "177.10">
-  <!ENTITY FUEL_TANK_CENTROID_STATION "196.60">
-  <!ENTITY FUEL_TANK_DRAIN_STATION    "216.00">
-  <!ENTITY OXYGEN_TANK_CAPACITY        "96.46">
-  <!ENTITY FUEL_TANK_CAPACITY          "13.78">
-  <!ENTITY OXYGEN_LOAD                 "48.23">
-  <!ENTITY FUEL_LOAD                    "6.89">
+  <!ENTITY EMPTY_WEIGHT  "  9.70">
 ]>
 <fdm_config name="PB" version="2.0" release="ALPHA"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -118,7 +111,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL1_Y; </y>
@@ -132,7 +125,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL1_Y; </y>
@@ -146,7 +139,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL1_Y; </y>
@@ -160,7 +153,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL1_Y; </y>
@@ -174,7 +167,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL1_Y; </y>
@@ -188,7 +181,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL1_Y; </y>
@@ -202,7 +195,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL2_Y; </y>
@@ -216,7 +209,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL2_Y; </y>
@@ -230,7 +223,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL2_Y; </y>
@@ -244,7 +237,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL2_Y; </y>
@@ -258,7 +251,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL2_Y; </y>
@@ -272,7 +265,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL2_Y; </y>
@@ -286,7 +279,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL3_Y; </y>
@@ -300,7 +293,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL3_Y; </y>
@@ -314,7 +307,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL3_Y; </y>
@@ -328,7 +321,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL3_Y; </y>
@@ -342,7 +335,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL3_Y; </y>
@@ -356,7 +349,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL3_Y; </y>
@@ -370,7 +363,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL4_Y; </y>
@@ -384,7 +377,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL4_Y; </y>
@@ -398,7 +391,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL4_Y; </y>
@@ -412,7 +405,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL4_Y; </y>
@@ -426,7 +419,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL4_Y; </y>
@@ -440,7 +433,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL4_Y; </y>
@@ -454,7 +447,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL5_Y; </y>
@@ -468,7 +461,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL5_Y; </y>
@@ -482,7 +475,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL5_Y; </y>
@@ -496,7 +489,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL5_Y; </y>
@@ -510,7 +503,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL5_Y; </y>
@@ -524,7 +517,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL5_Y; </y>
@@ -538,7 +531,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL6_Y; </y>
@@ -552,7 +545,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL6_Y; </y>
@@ -566,7 +559,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL6_Y; </y>
@@ -580,7 +573,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL6_Y; </y>
@@ -594,7 +587,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL6_Y; </y>
@@ -608,7 +601,7 @@
           <radius unit="IN"> 2 </radius>
           <length unit="FT"> 18 </length>
         </form>
-        <weight unit="LBS"> 6.61 </weight>
+        <weight unit="LBS"> &EMPTY_WEIGHT; </weight>
         <location unit="IN">
           <x> &ENGINE_CYLINDER_STATION; </x>
           <y> &ENGINE_COL6_Y; </y>
@@ -767,10 +760,17 @@
       <fcs> ON </fcs>
       <ground_reactions> ON </ground_reactions>
       <coefficients> OFF </coefficients>
+      <property> aero/qbar-psf </property>
+      <property> propulsion/engine[1]/fuel-flow-rate-pps </property>
+      <property> propulsion/engine[1]/oxi-flow-rate-pps </property>
+      <property> propulsion/engine[1]/thrust-lbs </property>
+      <property> propulsion/engine[8]/thrust-lbs </property>
+      <property> propulsion/engine[15]/thrust-lbs </property>
     </output>
-
+<!--
     <output name="perigee.csv" type="CSV" rate="10">
       <property> guidance/executive/periapsis </property>
       <property> guidance/executive/apoapsis </property>
     </output>
+-->
 </fdm_config>
