@@ -5,7 +5,7 @@
   <property> system/fms/stage2_initial_fill_pct  </property>
   <property> system/fms/stage3_initial_fill_pct  </property>
 
-  <property value="-1.4"> system/fms/oxi_gamma  </property>
+  <property value="-1.4"> system/fms/gamma  </property>
   <property value="75"> system/fms/initial_pressure_drop_psi  </property>
   <property value="300"> system/fms/initial_tank_pressure_psi  </property>
 
@@ -85,7 +85,7 @@ solved using quadratic:
 		  </quotient>
 		</difference>
 	      </quotient>
-	      <property> system/fms/oxi_gamma </property>
+	      <property> system/fms/gamma </property>
 	    </pow>
 	  </product>
 	</min>
@@ -114,7 +114,7 @@ solved using quadratic:
 		  </quotient>
 		</difference>
 	      </quotient>
-	      <property> system/fms/oxi_gamma </property>
+	      <property> system/fms/gamma </property>
 	    </pow>
 	  </product>
 	</min>
@@ -143,7 +143,7 @@ solved using quadratic:
 		  </quotient>
 		</difference>
 	      </quotient>
-	      <property> system/fms/oxi_gamma </property>
+	      <property> system/fms/gamma </property>
 	    </pow>
 	  </product>
 	</min>

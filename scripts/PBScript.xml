@@ -99,7 +99,7 @@
 	<property> system/fms/stage3_Ptank </property>
       </notify>
       <condition> simulation/sim-time-sec >= simulation/notify-time-trigger </condition>
-      <set name="simulation/notify-time-trigger" value="1000" type="delta"/>
+      <set name="simulation/notify-time-trigger" value="1" type="delta"/>
     </event>
 
     <event name="Stage 1 Ignition">

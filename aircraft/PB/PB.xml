@@ -769,8 +769,4 @@
       <property> propulsion/engine[15]/thrust-lbs </property>
     </output>
 -->
-    <output name="perigee.csv" type="CSV" rate="10">
-      <property> guidance/executive/periapsis </property>
-      <property> guidance/executive/apoapsis </property>
-    </output>
 </fdm_config>
