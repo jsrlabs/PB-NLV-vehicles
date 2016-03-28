@@ -777,6 +777,9 @@
       <property> propulsion/tank[2]/contents-lbs </property>
       <property> propulsion/tank[15]/contents-lbs </property>
       <property> propulsion/tank[29]/contents-lbs </property>
+      <property> system/fms/stage1_tank_depleted </property>
+      <property> system/fms/stage2_tank_depleted </property>
+      <property> system/fms/stage3_tank_depleted </property>
     </output>
 
 </fdm_config>

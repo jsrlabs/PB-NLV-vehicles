@@ -166,7 +166,7 @@
     <parameter axis="y">system/fms/stage3_Ptank</parameter>
   </plot>
 
-    <plot>
+  <plot>
     <title>Tank contents</title>
     <label axis="x">Time (sec)</label>
     <label axis="y"> (lbs)</label>
@@ -178,5 +178,15 @@
     <parameter axis="y">propulsion/tank[29]/contents-lbs</parameter>
   </plot>
 
+  <plot>
+    <title>Tank contents</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (percent full)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">system/fms/stage1_tank_depleted</parameter>
+    <parameter axis="y">system/fms/stage2_tank_depleted</parameter>
+    <parameter axis="y">system/fms/stage3_tank_depleted</parameter>
+  </plot>
 
 </plotset>
