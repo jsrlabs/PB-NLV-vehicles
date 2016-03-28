@@ -1,0 +1,36 @@
+* sim development plan
+** more useful output plots
+** ability to easily enter vehicle configuration
+** use fuel fill level for pitch table index
+** ability to run 2 or more vehicle configurations, compare results
+** get faster desktop running
+** optimization:
+*** look at Brent's algorithm in Numerical Recipes for faster optimizer (re Ares I paper)
+*** http://www.scipy-lectures.org/advanced/mathematical_optimization/index.html
+*** https://en.wikipedia.org/wiki/Trajectory_optimization
+** faster compiler options, retry later
+*** gcc -O6: 4.2 seconds
+*** gcc -O2: 4.3
+*** gcc -O3 -fomit-frame-pointer -march=native: 4.3
+*** gcc -Ofast -fomit-frame-pointer -march=native: 4.2
+*** 1 sec faster with logging turned off
+** test different dt's
+** validate sim using Vanguard data
+** squawk: removing integrator settings in PBScript.xml causes change in apogee
+** if needed, use CEA to make map of engine Isp vs O/F or other parameters
+** DONE capture tank pct-full at startup
+** DONE cleanup PBScript, replace hokey simtime >= 150 check with arming.  try delay
+* model development plan
+** why is Paul's burnout thrust lower than the model's? 
+** check on oscillations at staging
+oscillates around +/- alpha.  aerodynamically stable!?!
+** check on pressurant gas mass for fills: 40% 50% 75%
+** non-symmetric propellant depletion, will it cause excessive pitch/yaw during staging?
+** what is max allowed alpha*q?
+** DONE check on symmetry of fuel vs oxi blowdown pressure curves.  Paul says same pressure drops so mixture ratio won't change
+** DONE gamma for fuel pressurant.  Paul says 1.4
+** DONE check on flatness of Isp at low chamber pressure
+yes, see CEA-runs/htp-kero.out
+225 psi = 3080 m/s
+99 psi = 3060 m/s
+40 psi = 3040 m/s
