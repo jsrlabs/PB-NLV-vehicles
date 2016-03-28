@@ -746,6 +746,7 @@
   needed (the rate below is in Hz.) 
   -->
   
+<!--
     <output name="PB.csv" type="CSV" rate="10">
       <simulation> ON </simulation>
       <atmosphere> ON </atmosphere>
@@ -767,10 +768,9 @@
       <property> propulsion/engine[8]/thrust-lbs </property>
       <property> propulsion/engine[15]/thrust-lbs </property>
     </output>
-<!--
+-->
     <output name="perigee.csv" type="CSV" rate="10">
       <property> guidance/executive/periapsis </property>
       <property> guidance/executive/apoapsis </property>
     </output>
--->
 </fdm_config>

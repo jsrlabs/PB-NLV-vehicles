@@ -16,7 +16,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Perigee estimate (miles)</label>
     <scale>auto</scale>
-    <min axis="y">0</min>
+    <!-- <min axis="y">0</min> -->
     <parameter axis="x">Time</parameter>
     <parameter axis="y">guidance/executive/periapsis</parameter>
   </plot>
@@ -33,7 +33,7 @@
   <plot>
     <title>Attitude - Pitch, Roll, Yaw</title>
     <label axis="x">Time (sec)</label>
-    <label axis="y">Pitch (rad)</label>
+    <label axis="y"> (deg)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">Theta (deg)</parameter>
@@ -84,7 +84,7 @@
   </plot>
 
   <plot>
-    <title>Thrust</title>
+    <title>Total Thrust</title>
     <label axis="x">Time (sec)</label>
     <label axis="y">Thrust (lbs)</label>
     <scale>auto</scale>
@@ -104,10 +104,40 @@
   <plot>
     <title>Accel</title>
     <label axis="x">Time (sec)</label>
-    <label axis="y">Acceleration (ft/s)</label>
+    <label axis="y">Acceleration (ft/s2)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">BodyAccel_X</parameter>
+  </plot>
+
+  <plot>
+    <title>Q</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (psf)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">aero/qbar-psf</parameter>
+  </plot>
+
+  <plot>
+    <title>Mass Flow Stage 1</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (lb/s)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">propulsion/engine[1]/fuel-flow-rate-pps</parameter>
+    <parameter axis="y">propulsion/engine[1]/oxi-flow-rate-pps</parameter>
+  </plot>
+
+  <plot>
+    <title>Thrust, Single Engine</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (lbf)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">propulsion/engine[1]/thrust-lbs</parameter>
+    <parameter axis="y">propulsion/engine[8]/thrust-lbs</parameter>
+    <parameter axis="y">propulsion/engine[15]/thrust-lbs</parameter>
   </plot>
 
 </plotset>

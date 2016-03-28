@@ -17,7 +17,7 @@
   -->
   <property value="0">   guidance/executive/mode </property>
   <property value="0">   guidance/constant/grav_turn_time </property>
-  <property value="380"> guidance/constant/total_burn_time </property>
+  <property value="510"> guidance/constant/total_burn_time </property>
 
 
   <!-- ##################################################################### -->

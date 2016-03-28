@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <system name="Fuel Management System">
 
-  <!-- This term can range from 0 to 1, and it represents the fill percent
-        of the tank above which the flow rate is a constant 1. For example
-        a value of 0.3 specifies that while the tank is filled at 30% or
-        greater of capacity, the flow rate will be 100% of maximum nominal, where
-        the maximum nominal flow rate is specified in the engine XML file. Note
-        that the tank may start off already only half full (50%). -->
-  <property value="0.50"> system/fms/stage1_fuel_tank_const_flow_fill_pct  </property>
-  <property value="0.50"> system/fms/stage2_fuel_tank_const_flow_fill_pct  </property>
-  <property value="0.50"> system/fms/stage3_fuel_tank_const_flow_fill_pct  </property>
-    
-  <!-- This parameter "system/fms/stage1_empty_fuel_tank_flow_pct" specifies the percentage
-        of the maximum flow rate that is modeled when the tank is empty. For example,
-        a value of 0.41 means that when the tank is empty the propellant flow rate will
-        be 41% of the nominal flow rate. 
-  -->
+  <property> system/fms/stage1_initial_fill_pct  </property>
+  <property> system/fms/stage2_initial_fill_pct  </property>
+  <property> system/fms/stage3_initial_fill_pct  </property>
 
-  <property value="0.41"> system/fms/stage1_empty_fuel_tank_flow_pct </property>
-  <property value="0.41"> system/fms/stage2_empty_fuel_tank_flow_pct </property>
-  <property value="0.41"> system/fms/stage3_empty_fuel_tank_flow_pct </property>
+  <property value="-1.4"> system/fms/oxi_gamma  </property>
+  <property value="75"> system/fms/initial_pressure_drop_psi  </property>
+  <property value="300"> system/fms/initial_tank_pressure_psi  </property>
 
   <channel name="Tank Flow Rates">
       
-    <fcs_function name="system/fms/stage1_fuel_flow_rate_factor">
       <!--
             This is the calculation that controls what percentage of the
         maximum fuel flow rate (specified in the engine file, PB_Engine.xml)
@@ -49,30 +36,152 @@
         tank is used as the "indexer" tank to determine current fill 
         quantity.
           
-        flow_rate_factor = current_fill_percent * [(1 - empty_flow_pct) / const_flow_fill_pct] + empty_flow_pct
+        press_factor = ((1-current_fill_percent)/(1-initial_fill_percent))^gamma
+
+        flow_rate_factor = (Ptank - (Pdrops_initial * flow_rate_factor^2) / (Ptank_initial - Pdrops_initial)
+
+rearranged:
+        0 = (Pdrops_initial / (Ptank_initial - Pdrops_initial)) * flow_rate_factor^2 + flow_rate_factor - Ptank / (Ptank_initial - Pdrops_initial)
+
+solved using quadratic:
+        flow_rate_factor = (-1 + sqrt(1 - 4 * (Pdrops_initial / (Ptank_initial - Pdrops_initial)) * (- Ptank / (Ptank_initial - Pdrops_initial)))) / 2 * (Pdrops_initial / (Ptank_initial - Pdrops_initial))
+
+        flow_rate_factor = (-1 + sqrt(1 - 4 * (Pdrops_initial / (Ptank_initial - Pdrops_initial)) * (- Ptank / (Ptank_initial - Pdrops_initial)))) / 2 * (Pdrops_initial / (Ptank_initial - Pdrops_initial))
+
         throttle_position = throttle_command * minimum(1, flow_rate_factor)
       -->
+    <fcs_function name="system/fms/A">
+      <function>
+	<quotient>
+	  <property> system/fms/initial_pressure_drop_psi  </property>
+	  <difference>
+	    <property> system/fms/initial_tank_pressure_psi  </property>
+	    <property> system/fms/initial_pressure_drop_psi  </property>
+	  </difference>
+	</quotient>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="system/fms/stage1_Ptank">
+      <function>
+        <min>
+	  <property> system/fms/initial_tank_pressure_psi  </property>
+	  <product>
+	    <property> system/fms/initial_tank_pressure_psi  </property>
+	    <pow>
+	      <quotient>
+		<difference>
+		  <value> 1 </value>
+		  <quotient>
+		    <property> propulsion/tank[1]/pct-full </property>
+		    <value> 100 </value>
+		  </quotient>
+		</difference>
+		<difference>
+		  <value> 1 </value>
+		  <quotient>
+		    <property> system/fms/stage1_initial_fill_pct </property>
+		    <value> 100 </value>
+		  </quotient>
+		</difference>
+	      </quotient>
+	      <property> system/fms/oxi_gamma </property>
+	    </pow>
+	  </product>
+	</min>
+      </function>
+    </fcs_function>
+    <fcs_function name="system/fms/stage2_Ptank">
+      <function>
+        <min>
+	  <property> system/fms/initial_tank_pressure_psi  </property>
+	  <product>
+	    <property> system/fms/initial_tank_pressure_psi  </property>
+	    <pow>
+	      <quotient>
+		<difference>
+		  <value> 1 </value>
+		  <quotient>
+		    <property> propulsion/tank[15]/pct-full </property>
+		    <value> 100 </value>
+		  </quotient>
+		</difference>
+		<difference>
+		  <value> 1 </value>
+		  <quotient>
+		    <property> system/fms/stage2_initial_fill_pct </property>
+		    <value> 100 </value>
+		  </quotient>
+		</difference>
+	      </quotient>
+	      <property> system/fms/oxi_gamma </property>
+	    </pow>
+	  </product>
+	</min>
+      </function>
+    </fcs_function>
+    <fcs_function name="system/fms/stage3_Ptank">
+      <function>
+        <min>
+	  <property> system/fms/initial_tank_pressure_psi  </property>
+	  <product>
+	    <property> system/fms/initial_tank_pressure_psi  </property>
+	    <pow>
+	      <quotient>
+		<difference>
+		  <value> 1 </value>
+		  <quotient>
+		    <property> propulsion/tank[29]/pct-full </property>
+		    <value> 100 </value>
+		  </quotient>
+		</difference>
+		<difference>
+		  <value> 1 </value>
+		  <quotient>
+		    <property> system/fms/stage3_initial_fill_pct </property>
+		    <value> 100 </value>
+		  </quotient>
+		</difference>
+	      </quotient>
+	      <property> system/fms/oxi_gamma </property>
+	    </pow>
+	  </product>
+	</min>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="system/fms/stage1_fuel_flow_rate_factor">
       <function>
         <product>
           <property> fcs/throttle-cmd-norm[0] </property>
           <min>
             <value> 1 </value>
-            <sum>
-              <quotient>
-                <product>
-                  <quotient>
-                    <property> propulsion/tank[1]/pct-full </property>
-                    <value> 100 </value>
-                  </quotient>
-                  <difference>
-                    <value> 1 </value>
-                    <property> system/fms/stage1_empty_fuel_tank_flow_pct </property>
-                  </difference>
-                </product>
-                <property> system/fms/stage1_fuel_tank_const_flow_fill_pct </property>
-              </quotient>
-              <property> system/fms/stage1_empty_fuel_tank_flow_pct </property>
-            </sum>
+	    <quotient>
+	      <sum>
+		<value> -1 </value>
+		<pow>
+		  <sum>
+		    <value> 1 </value>
+		    <product>
+		      <value> 4 </value>
+		      <property> system/fms/A  </property>
+		      <quotient>
+			<property> system/fms/stage1_Ptank </property>
+			<difference>
+			  <property> system/fms/initial_tank_pressure_psi  </property>
+			  <property> system/fms/initial_pressure_drop_psi  </property>
+			</difference>
+		      </quotient>
+		    </product>
+		  </sum>
+		  <value> 0.5 </value>
+		</pow>
+	      </sum>
+	      <product>
+		<value> 2 </value>
+		<property> system/fms/A  </property>
+	      </product>
+	    </quotient>
           </min>
         </product>
       </function>
@@ -107,22 +216,32 @@
           <property> fcs/throttle-cmd-norm[1] </property>
           <min>
             <value> 1 </value>
-            <sum>
-              <quotient>
-                <product>
-                  <quotient>
-                    <property> propulsion/tank[15]/pct-full </property>
-                    <value> 100 </value>
-                  </quotient>
-                  <difference>
-                    <value> 1 </value>
-                    <property> system/fms/stage2_empty_fuel_tank_flow_pct </property>
-                  </difference>
-                </product>
-                <property> system/fms/stage2_fuel_tank_const_flow_fill_pct </property>
-              </quotient>
-              <property> system/fms/stage2_empty_fuel_tank_flow_pct </property>
-            </sum>
+	    <quotient>
+	      <sum>
+		<value> -1 </value>
+		<pow>
+		  <sum>
+		    <value> 1 </value>
+		    <product>
+		      <value> 4 </value>
+		      <property> system/fms/A  </property>
+		      <quotient>
+			<property> system/fms/stage2_Ptank </property>
+			<difference>
+			  <property> system/fms/initial_tank_pressure_psi  </property>
+			  <property> system/fms/initial_pressure_drop_psi  </property>
+			</difference>
+		      </quotient>
+		    </product>
+		  </sum>
+		  <value> 0.5 </value>
+		</pow>
+	      </sum>
+	      <product>
+		<value> 2 </value>
+		<property> system/fms/A  </property>
+	      </product>
+	    </quotient>
           </min>
         </product>
       </function>
@@ -149,22 +268,32 @@
           <property> fcs/throttle-cmd-norm[2] </property>
           <min>
             <value> 1 </value>
-            <sum>
-              <quotient>
-                <product>
-                  <quotient>
-                    <property> propulsion/tank[29]/pct-full </property>
-                    <value> 100 </value>
-                  </quotient>
-                  <difference>
-                    <value> 1 </value>
-                    <property> system/fms/stage3_empty_fuel_tank_flow_pct </property>
-                  </difference>
-                </product>
-                <property> system/fms/stage3_fuel_tank_const_flow_fill_pct </property>
-              </quotient>
-              <property> system/fms/stage3_empty_fuel_tank_flow_pct </property>
-            </sum>
+	    <quotient>
+	      <sum>
+		<value> -1 </value>
+		<pow>
+		  <sum>
+		    <value> 1 </value>
+		    <product>
+		      <value> 4 </value>
+		      <property> system/fms/A  </property>
+		      <quotient>
+			<property> system/fms/stage3_Ptank </property>
+			<difference>
+			  <property> system/fms/initial_tank_pressure_psi  </property>
+			  <property> system/fms/initial_pressure_drop_psi  </property>
+			</difference>
+		      </quotient>
+		    </product>
+		  </sum>
+		  <value> 0.5 </value>
+		</pow>
+	      </sum>
+	      <product>
+		<value> 2 </value>
+		<property> system/fms/A  </property>
+	      </product>
+	    </quotient>
           </min>
         </product>
       </function>

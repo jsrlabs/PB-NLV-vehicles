@@ -31,6 +31,6 @@
 
 <rocket_engine name="PB_Engine_stage1">
   <isp>                   230 </isp>
-  <sloxiflowmax unit="LBS/SEC">  0.639   </sloxiflowmax>
-  <slfuelflowmax unit="LBS/SEC"> 0.091   </slfuelflowmax>
+  <sloxiflowmax unit="LBS/SEC">  0.872   </sloxiflowmax>
+  <slfuelflowmax unit="LBS/SEC"> 0.124   </slfuelflowmax>
 </rocket_engine>
