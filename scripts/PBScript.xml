@@ -318,7 +318,7 @@
       <condition>
 	simulation/sim-time-sec >= simulation/quitting-time-sec
       </condition>
-      <set name="simulation/brennschluss" action="step" value="1"/>
+      <set name="simulation/Normal_exit_after_stage3_burnout" action="step" value="1"/>
       <notify>
         <description>
           Simulator quit
