@@ -120,13 +120,28 @@
   </plot>
 
   <plot>
-    <title>Mass Flow Stage 1</title>
+    <title>Mass Flow</title>
     <label axis="x">Time (sec)</label>
     <label axis="y"> (lb/s)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">propulsion/engine[1]/fuel-flow-rate-pps</parameter>
     <parameter axis="y">propulsion/engine[1]/oxi-flow-rate-pps</parameter>
+    <parameter axis="y">propulsion/engine[8]/fuel-flow-rate-pps</parameter>
+    <parameter axis="y">propulsion/engine[8]/oxi-flow-rate-pps</parameter>
+    <parameter axis="y">propulsion/engine[15]/fuel-flow-rate-pps</parameter>
+    <parameter axis="y">propulsion/engine[15]/oxi-flow-rate-pps</parameter>
+  </plot>
+
+  <plot>
+    <title>Tank fill</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (percent)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">propulsion/tank[1]/pct-full</parameter>
+    <parameter axis="y">propulsion/tank[15]/pct-full</parameter>
+    <parameter axis="y">propulsion/tank[29]/pct-full</parameter>
   </plot>
 
   <plot>
@@ -139,5 +154,29 @@
     <parameter axis="y">propulsion/engine[8]/thrust-lbs</parameter>
     <parameter axis="y">propulsion/engine[15]/thrust-lbs</parameter>
   </plot>
+
+  <plot>
+    <title>Tank pressure</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (psi)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">system/fms/stage1_Ptank</parameter>
+    <parameter axis="y">system/fms/stage2_Ptank</parameter>
+    <parameter axis="y">system/fms/stage3_Ptank</parameter>
+  </plot>
+
+    <plot>
+    <title>Tank contents</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y"> (lbs)</label>
+    <scale>auto</scale>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">propulsion/tank[1]/contents-lbs</parameter>
+    <parameter axis="y">propulsion/tank[2]/contents-lbs</parameter>
+    <parameter axis="y">propulsion/tank[15]/contents-lbs</parameter>
+    <parameter axis="y">propulsion/tank[29]/contents-lbs</parameter>
+  </plot>
+
 
 </plotset>

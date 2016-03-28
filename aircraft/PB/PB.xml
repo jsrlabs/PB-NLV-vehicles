@@ -746,7 +746,7 @@
   needed (the rate below is in Hz.) 
   -->
   
-<!--
+
     <output name="PB.csv" type="CSV" rate="10">
       <simulation> ON </simulation>
       <atmosphere> ON </atmosphere>
@@ -767,6 +767,16 @@
       <property> propulsion/engine[1]/thrust-lbs </property>
       <property> propulsion/engine[8]/thrust-lbs </property>
       <property> propulsion/engine[15]/thrust-lbs </property>
+      <property> propulsion/tank[1]/pct-full </property>
+      <property> propulsion/tank[15]/pct-full </property>
+      <property> propulsion/tank[29]/pct-full </property>
+      <property> system/fms/stage1_Ptank </property>
+      <property> system/fms/stage2_Ptank </property>
+      <property> system/fms/stage3_Ptank </property>
+      <property> propulsion/tank[1]/contents-lbs </property>
+      <property> propulsion/tank[2]/contents-lbs </property>
+      <property> propulsion/tank[15]/contents-lbs </property>
+      <property> propulsion/tank[29]/contents-lbs </property>
     </output>
--->
+
 </fdm_config>

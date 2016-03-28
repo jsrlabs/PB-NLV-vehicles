@@ -152,6 +152,46 @@
       <set name="inertia/pointmass-weight-lbs[33]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[34]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[35]" action="step" value="0"/>
+      <set name="propulsion/tank[0]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[1]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[2]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[3]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[4]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[5]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[6]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[7]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[8]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[9]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[10]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[11]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[12]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[13]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[22]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[23]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[24]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[25]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[34]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[35]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[36]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[37]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[46]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[47]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[48]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[49]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[58]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[59]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[60]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[61]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[62]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[63]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[64]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[65]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[66]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[67]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[68]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[69]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[70]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[71]/contents-lbs" action="step" value="0"/>
       <!--set name="fcs/throttle-cmd-norm[0]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
       <set name="system/guidance/coast" action="step" value="1"/>
       <notify>
@@ -201,6 +241,30 @@
       <set name="inertia/pointmass-weight-lbs[25]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[19]" action="step" value="0"/>
       <set name="inertia/pointmass-weight-lbs[13]" action="step" value="0"/>
+      <set name="propulsion/tank[14]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[15]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[16]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[17]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[18]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[19]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[20]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[21]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[26]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[27]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[32]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[33]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[38]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[39]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[44]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[45]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[50]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[51]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[52]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[53]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[54]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[55]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[56]/contents-lbs" action="step" value="0"/>
+      <set name="propulsion/tank[57]/contents-lbs" action="step" value="0"/>
       <!--set name="fcs/throttle-cmd-norm[1]"  action="FG_RAMP" value="0.0" tc="0.1"/-->
       <set name="system/guidance/coast" action="step" value="1"/>
       <notify>
