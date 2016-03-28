@@ -20,11 +20,12 @@
   </description>
   
   <use aircraft="PB" initialize="LC39"/>
-  <run start="0.0" end="550" dt="0.0083333333333333333">
+  <run start="0.0" end="1000" dt="0.0083333333333333333">
 
     <property> simulation/notify-time-trigger </property>
     <property value="1"> forces/hold-down </property>
     <property value="1"> system/guidance/coast </property>
+    <property value="30000.0"> simulation/quitting-time-sec </property>
 
     <event name="First frame integrator setting">
       <condition>
@@ -298,9 +299,29 @@
 	fcs/throttle-cmd-norm[2] eq 1.0
 	propulsion/engine[14]/thrust-lbs lt 1.0
       </condition>
+      <set name="simulation/quitting-time-sec" action="step">
+       <function>
+         <sum>
+           <property> simulation/sim-time-sec </property>
+           <value> 10 </value>
+         </sum>
+       </function>
+      </set>
       <notify>
         <description>
           3rd Stage Brennschluss
+        </description>
+      </notify>
+    </event>
+
+    <event name="quit">
+      <condition>
+	simulation/sim-time-sec >= simulation/quitting-time-sec
+      </condition>
+      <set name="simulation/brennschluss" action="step" value="1"/>
+      <notify>
+        <description>
+          Simulator quit
         </description>
       </notify>
     </event>
