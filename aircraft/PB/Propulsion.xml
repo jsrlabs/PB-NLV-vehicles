@@ -24,8 +24,8 @@
   <!ENTITY FUEL_LOAD_STAGE1             "6.89">
   <!ENTITY OXYGEN_LOAD_STAGE2          "48.23">
   <!ENTITY FUEL_LOAD_STAGE2             "6.89">
-  <!ENTITY OXYGEN_LOAD_STAGE3          "72.35">
-  <!ENTITY FUEL_LOAD_STAGE3            "10.34">
+  <!ENTITY OXYGEN_LOAD_STAGE3          "48.23">
+  <!ENTITY FUEL_LOAD_STAGE3             "6.89">
 ]>
 <propulsion>
 
