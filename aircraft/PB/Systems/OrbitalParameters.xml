@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <system name="Orbital Parameters">
   
   <!--
@@ -96,6 +96,24 @@
             <property>inertial/sea-level-radius_ft</property>
           </difference>
           <value>5280</value>
+        </quotient>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="guidance/executive/downrange-miles">
+      <function>
+        <quotient>
+	  <property> position/distance-from-start-lon-mt </property>
+          <value> 1609.344 </value>
+        </quotient>
+      </function>
+    </fcs_function>
+    
+    <fcs_function name="guidance/executive/altitude-miles">
+      <function>
+        <quotient>
+	  <property> position/h-sl-meters </property>
+          <value> 1609.344 </value>
         </quotient>
       </function>
     </fcs_function>

@@ -780,6 +780,9 @@
       <property> system/fms/stage1_tank_depleted </property>
       <property> system/fms/stage2_tank_depleted </property>
       <property> system/fms/stage3_tank_depleted </property>
+      <property> system/fms/tank_depleted </property>
+      <property> guidance/executive/downrange-miles </property>
+      <property> guidance/executive/altitude-miles </property>
     </output>
 
 </fdm_config>

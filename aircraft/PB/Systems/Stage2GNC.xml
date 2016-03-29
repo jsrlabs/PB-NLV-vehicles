@@ -66,12 +66,12 @@
 
       <pid name="system/control/stage2-pitch-rate-cmd-rad_sec" type="standard">
         <input> system/control/stage2-pitch-rate-error-rad_sec </input>
-        <kp> -1.0 </kp>
+        <kp> -2.0 </kp>
         <ki>  0.2 </ki>
         <kd>  0.5000   </kd>
         <clipto>
-          <min> -0.0873 </min> <!-- limited to +/-12 degrees -->
-          <max>  0.0873 </max>
+          <min> -0.1873 </min> <!-- limited to +/-12 degrees -->
+          <max>  0.1873 </max>
         </clipto>
       </pid>
 
