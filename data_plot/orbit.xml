@@ -7,6 +7,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Apogee estimate (miles)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">guidance/executive/apoapsis</parameter>
   </plot>
@@ -16,6 +17,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Perigee estimate (miles)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <min axis="y">0</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">guidance/executive/periapsis</parameter>
@@ -26,6 +28,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Perigee estimate (miles)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">guidance/executive/periapsis</parameter>
   </plot>
@@ -35,6 +38,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Altitude (ft)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">Altitude AGL (ft)</parameter>
   </plot>
@@ -44,6 +48,7 @@
     <label axis="x">Downrange (miles)</label>
     <label axis="y">Altitude (miles)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <!-- max axis="y">500</max -->
     <parameter axis="x">guidance/executive/downrange-miles</parameter>
     <parameter axis="y">guidance/executive/altitude-miles</parameter>
@@ -54,6 +59,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (deg)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">Theta (deg)</parameter>
     <parameter axis="y">Phi (deg)</parameter>
@@ -65,6 +71,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Pitch (rad)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">system/guidance/pitch/cmd-from-rate</parameter>
   </plot>
@@ -73,6 +80,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Pitch (rad)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">system/guidance/pitch_rate_cmd_table</parameter>
   </plot>
@@ -81,6 +89,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Pitch error (deg)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">system/guidance/pitch-error-deg</parameter>
   </plot>
@@ -90,6 +99,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Pitch (rad/sec)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">system/guidance/pitch-rate</parameter>
   </plot>
@@ -98,6 +108,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Alpha (deg)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">Alpha (deg)</parameter>
   </plot>
@@ -107,6 +118,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Thrust (lbf)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">F_{Prop x} (lbs)</parameter>
   </plot>
@@ -116,6 +128,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Inertial Velocity (ft/sec)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">V_{Inertial} (ft/s)</parameter>
   </plot>
@@ -125,6 +138,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y">Acceleration (ft/s2)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">accelerations/n-pilot-x-norm</parameter>
     <parameter axis="y">accelerations/n-pilot-y-norm</parameter>
@@ -136,6 +150,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (psf)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">aero/qbar-psf</parameter>
   </plot>
@@ -145,6 +160,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (lb/s)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">propulsion/engine[1]/fuel-flow-rate-pps</parameter>
     <parameter axis="y">propulsion/engine[1]/oxi-flow-rate-pps</parameter>
@@ -159,6 +175,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (percent)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">propulsion/tank[1]/pct-full</parameter>
     <parameter axis="y">propulsion/tank[15]/pct-full</parameter>
@@ -170,6 +187,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (lbf)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">propulsion/engine[1]/thrust-lbs</parameter>
     <parameter axis="y">propulsion/engine[8]/thrust-lbs</parameter>
@@ -181,6 +199,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (psi)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">system/fms/stage1_Ptank</parameter>
     <parameter axis="y">system/fms/stage2_Ptank</parameter>
@@ -192,6 +211,7 @@
     <label axis="x">Time (sec)</label>
     <label axis="y"> (lbs)</label>
     <scale>auto</scale>
+    <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">propulsion/tank[1]/contents-lbs</parameter>
     <parameter axis="y">propulsion/tank[2]/contents-lbs</parameter>

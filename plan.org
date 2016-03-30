@@ -1,8 +1,6 @@
 * sim development plan
 ** TODO more useful output plots
 ** get faster desktop running
-** ability to easily enter vehicle configuration
-** ability to run 2 or more vehicle configurations, compare results
 ** modify guidance to permit 90 deg pitch
 ** statistics and convergence plot on optimizer iterations
 ** optimization:
@@ -19,6 +17,8 @@
 ** validate sim using Vanguard data
 ** squawk: removing integrator settings in PBScript.xml causes change in apogee
 ** if needed, use CEA to make map of engine Isp vs O/F or other parameters
+** ability to easily enter vehicle configuration
+** DONE ability to run 2 or more vehicle configurations, compare results
 ** DONE modify trajectory.py to support alternate vehicle on the cmdline
 ** DONE use fuel fill level for pitch table index
 ** DONE capture tank pct-full at startup
