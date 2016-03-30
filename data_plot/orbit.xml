@@ -12,21 +12,20 @@
   </plot>
 
   <plot>
-    <title>Perigee Estimate</title>
-    <label axis="x">Time (sec)</label>
-    <label axis="y">Perigee estimate (miles)</label>
-    <scale>auto</scale>
-    <!-- <min axis="y">0</min> -->
-    <parameter axis="x">Time</parameter>
-    <parameter axis="y">guidance/executive/periapsis</parameter>
-  </plot>
-
-  <plot>
     <title>Perigee Estimate - zoomed</title>
     <label axis="x">Time (sec)</label>
     <label axis="y">Perigee estimate (miles)</label>
     <scale>auto</scale>
     <min axis="y">0</min>
+    <parameter axis="x">Time</parameter>
+    <parameter axis="y">guidance/executive/periapsis</parameter>
+  </plot>
+
+  <plot>
+    <title>Perigee Estimate</title>
+    <label axis="x">Time (sec)</label>
+    <label axis="y">Perigee estimate (miles)</label>
+    <scale>auto</scale>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">guidance/executive/periapsis</parameter>
   </plot>
@@ -45,7 +44,7 @@
     <label axis="x">Downrange (miles)</label>
     <label axis="y">Altitude (miles)</label>
     <scale>auto</scale>
-    <max axis="y">500</max>
+    <!-- max axis="y">500</max -->
     <parameter axis="x">guidance/executive/downrange-miles</parameter>
     <parameter axis="y">guidance/executive/altitude-miles</parameter>
   </plot>
@@ -80,10 +79,10 @@
   <plot>
     <title>Pitch error</title>
     <label axis="x">Time (sec)</label>
-    <label axis="y">Pitch error (rad)</label>
+    <label axis="y">Pitch error (deg)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
-    <parameter axis="y">system/guidance/pitch-error-rad</parameter>
+    <parameter axis="y">system/guidance/pitch-error-deg</parameter>
   </plot>
 
   <plot>
@@ -106,7 +105,7 @@
   <plot>
     <title>Total Thrust</title>
     <label axis="x">Time (sec)</label>
-    <label axis="y">Thrust (lbs)</label>
+    <label axis="y">Thrust (lbf)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">F_{Prop x} (lbs)</parameter>
@@ -127,7 +126,9 @@
     <label axis="y">Acceleration (ft/s2)</label>
     <scale>auto</scale>
     <parameter axis="x">Time</parameter>
-    <parameter axis="y">BodyAccel_X</parameter>
+    <parameter axis="y">accelerations/n-pilot-x-norm</parameter>
+    <parameter axis="y">accelerations/n-pilot-y-norm</parameter>
+    <parameter axis="y">accelerations/n-pilot-z-norm</parameter>
   </plot>
 
   <plot>
@@ -196,18 +197,6 @@
     <parameter axis="y">propulsion/tank[2]/contents-lbs</parameter>
     <parameter axis="y">propulsion/tank[15]/contents-lbs</parameter>
     <parameter axis="y">propulsion/tank[29]/contents-lbs</parameter>
-  </plot>
-
-  <plot>
-    <title>Tank contents</title>
-    <label axis="x">Time (sec)</label>
-    <label axis="y"> (percent full)</label>
-    <scale>auto</scale>
-    <parameter axis="x">Time</parameter>
-    <parameter axis="y">system/fms/stage1_tank_depleted</parameter>
-    <parameter axis="y">system/fms/stage2_tank_depleted</parameter>
-    <parameter axis="y">system/fms/stage3_tank_depleted</parameter>
-    <parameter axis="y">system/fms/tank_depleted</parameter>
   </plot>
 
 </plotset>
