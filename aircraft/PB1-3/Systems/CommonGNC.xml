@@ -1,0 +1,87 @@
+<system name="Pitch Guidance Table">
+    
+  
+  <channel name="Pitch Guidance Table">
+
+    <fcs_function name="system/guidance/t_prime_sec">
+      <function>
+        <quotient>
+          <property> simulation/sim-time-sec </property>
+          <difference>
+            <property> guidance/constant/total_burn_time </property>
+            <property> guidance/constant/grav_turn_time </property>
+          </difference>            
+        </quotient>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="system/guidance/pitch-error-deg">
+      <function>
+        <quotient>
+	  <product>
+            <property> system/guidance/pitch-error-rad </property>
+	    <value> 180 </value>
+	  </product>
+	  <value> 3.14159265 </value>
+        </quotient>
+      </function>
+    </fcs_function>
+
+    <summer name="system/guidance/pitch-error-rad">
+      <bias>   1.57 </bias>
+      <input>  system/guidance/pitch/cmd-from-rate </input>
+      <input> -attitude/theta-rad </input>
+    </summer>
+
+    <pid name="system/guidance/pitch-rate" type="standard">
+      <input> system/guidance/pitch-error-rad </input>
+      <kp>  10.5 </kp>
+      <ki>  0.0 </ki>
+      <kd>  0.0  </kd>
+      <clipto>
+        <min> -11.873 </min> 
+        <max>  11.873 </max>
+      </clipto>
+    </pid>
+
+    <integrator name="system/guidance/pitch/cmd-from-rate">
+      <input> system/guidance/pitch/pitch_rate_cmd </input>
+      <c1> 1.0 </c1>
+    </integrator>
+
+    <fcs_function name="system/guidance/pitch/pitch_rate_cmd">
+      <function>
+	<product>
+	  <property> system/guidance/pitch/pitch_rate_cmd_table </property>
+	  <difference>
+	    <value> 1 </value>
+	    <property> system/guidance/coast </property>
+	  </difference>
+	</product>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="system/guidance/pitch/pitch_rate_cmd_table">
+      <function>
+        <table>
+          <independentVar lookup="row"> system/fms/tank_depleted </independentVar>
+          <tableData>
+   0.0   -9.04673842342e-05
+   0.1   -0.000920088562629
+   0.2   -0.000753328192827
+   0.3   -0.0258631593693
+   0.4   -0.000182958108308
+   0.5   -0.000163462757934
+   0.6   -8.13846978261e-06
+   0.7   -0.000432078159062
+   0.8   -0.0184196731437
+   0.9   0.00452045432586
+   1.0   0.000136629493309
+</tableData>
+        </table>
+      </function>
+    </fcs_function>
+      
+  </channel>
+    
+</system>
