@@ -1,0 +1,1945 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE propulsion [ <!-- All measurements belo in inches unless otherwise noted -->
+  <!ENTITY NOZZLE_STATION "220">
+  <!ENTITY ENGINE_CYLINDER_STATION "108">
+  <!ENTITY ENGINE_COL1_Y "-11.25">
+  <!ENTITY ENGINE_COL2_Y " -6.75">
+  <!ENTITY ENGINE_COL3_Y " -2.25">
+  <!ENTITY ENGINE_COL4_Y "  2.25">
+  <!ENTITY ENGINE_COL5_Y "  6.75">
+  <!ENTITY ENGINE_COL6_Y " 11.25">
+  <!ENTITY ENGINE_ROW1_Z "-11.25">
+  <!ENTITY ENGINE_ROW2_Z " -6.75">
+  <!ENTITY ENGINE_ROW3_Z " -2.25">
+  <!ENTITY ENGINE_ROW4_Z "  2.25">
+  <!ENTITY ENGINE_ROW5_Z "  6.75">
+  <!ENTITY ENGINE_ROW6_Z " 11.25">
+  <!ENTITY OXI_TANK_CENTROID_STATION  " 88.60">
+  <!ENTITY OXI_TANK_DRAIN_STATION     "177.10">
+  <!ENTITY FUEL_TANK_CENTROID_STATION "196.60">
+  <!ENTITY FUEL_TANK_DRAIN_STATION    "216.00">
+  <!ENTITY OXYGEN_TANK_CAPACITY        "43.75">
+  <!ENTITY FUEL_TANK_CAPACITY           "6.25">
+  <!ENTITY OXYGEN_LOAD_STAGE1          "21.88">
+  <!ENTITY FUEL_LOAD_STAGE1             "3.13">
+  <!ENTITY OXYGEN_LOAD_STAGE2          "21.88">
+  <!ENTITY FUEL_LOAD_STAGE2             "3.13">
+  <!ENTITY OXYGEN_LOAD_STAGE3          "32.81">
+  <!ENTITY FUEL_LOAD_STAGE3             "4.69">
+]>
+<propulsion>
+
+  <!-- 
+  The "ENTITY" statements above are like #define statements in C/C++. The items above must match
+  the same items in the main file, PB.xml. It's not an ideal situation with the same parameters
+  identified in two places, creating the possibility of a mismatch, but if these statements are
+  never altered it should be OK.
+  
+  The ENTITY statements simply make it easier to consistently place the engine objects. The engine
+  locations are needed for both the placement of the engine point masses in the mass balance section
+  and in the Propulsion.xml file.
+  
+  In this file, the engines are placed and defined for the purposes of making thrust, operating the
+  engines, draining the propellants, etc. Specifics of the engines and nozzles are located in two
+  additional files in the Engines/ subdirectory. Additionally, fuel flow rates (per stage) are
+  calculated in the FlowManagement.xml file as a function of throttle setting (which goes from 0 to 1).
+  Thrust is determined by the rocket equation: Isp*propellent_weight_flow_rate.
+  -->
+  
+      <!-- ####################################################### -->
+      <!-- ############## Column 1 motor assemblies ############## -->
+      <!-- ####################################################### -->
+      
+      <!-- Item 0 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 1 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 0 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 1 </feed>
+        <thruster file="PB_nozzle_stage1">
+          <location unit="IN">
+            <x> &NOZZLE_STATION; </x>
+            <y> &ENGINE_COL1_Y; </y>
+            <z> &ENGINE_ROW1_Z; </z>
+          </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 0 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 1 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 1 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 2 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 2 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 3 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 2 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 3 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 2 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 3 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 4 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 5 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 4 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 4 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 3 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 4 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 6 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 7 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 6 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 7 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 4 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 5 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 8 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 9 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 8 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 9 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 5 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 6 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 10 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 11 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 10 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 11 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- ####################################################### -->
+      <!-- ############## Column 2 motor assemblies ############## -->
+      <!-- ####################################################### -->
+
+      <!-- Item 6 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 7 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 12 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 13 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 12 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 13 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 7 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 8 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 14 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 15 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 14 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 15 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 8 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 9 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 16 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 17 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 16 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 17 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 9 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 10 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 18 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 19 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 18 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 19 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 10 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 11 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 20 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 21 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 20 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 21 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 11 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 12 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 22 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 23 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 22 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 23 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- ####################################################### -->
+      <!-- ############## Column 3 motor assemblies ############## -->
+      <!-- ####################################################### -->
+
+      <!-- Item 12 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 13 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 24 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 25 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 24 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 25 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 13 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 14 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 26 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 27 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 26 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 27 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 14 -->
+      <engine file="PB_engine_stage3">  <!-- Engine 15 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 28 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 29 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 28 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE3; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 29 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE3; </contents>
+      </tank>
+
+      <!-- Item 15 -->
+      <engine file="PB_engine_stage3">  <!-- Engine 16 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 30 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 31 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 30 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE3; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 31 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE3; </contents>
+      </tank>
+
+      <!-- Item 16 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 17 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 32 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 33 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 32 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 33 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 17 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 18 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 34 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 35 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 34 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 35 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- ####################################################### -->
+      <!-- ############## Column 4 motor assemblies ############## -->
+      <!-- ####################################################### -->
+
+      <!-- Item 18 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 19 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 36 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 37 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 36 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 37 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 19 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 20 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 38 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 39 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 38 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 39 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 20 -->
+      <engine file="PB_engine_stage3">  <!-- Engine 21 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 40 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 41 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 40 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE3; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 41 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE3; </contents>
+      </tank>
+
+      <!-- Item 21 -->
+      <engine file="PB_engine_stage3">  <!-- Engine 22 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 42 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 43 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 42 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE3; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 43 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE3; </contents>
+      </tank>
+
+      <!-- Item 22 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 23 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 44 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 45 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 44 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 45 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 23 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 24 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 46 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 47 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 46 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 47 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- ####################################################### -->
+      <!-- ############## Column 5 motor assemblies ############## -->
+      <!-- ####################################################### -->
+
+      <!-- Item 24 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 25 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 48 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 49 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 48 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 49 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 25 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 26 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 50 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 51 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 50 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 51 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 26 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 27 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 52 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 53 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 52 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 53 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 27 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 28 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 54 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 55 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 54 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 55 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 28 -->
+      <engine file="PB_engine_stage2">  <!-- Engine 29 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 56 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 57 </feed>
+        <thruster file="PB_nozzle">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 56 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE2; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 57 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE2; </contents>
+      </tank>
+
+      <!-- Item 29 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 30 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 58 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 59 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 58 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 59 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- ####################################################### -->
+      <!-- ############## Column 6 motor assemblies ############## -->
+      <!-- ####################################################### -->
+
+      <!-- Item 30 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 31 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 60 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 61 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 60 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 61 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 31 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 32 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 62 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 63 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 62 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 63 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 32 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 33 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 64 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 65 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 64 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 65 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 33 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 34 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 66 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 67 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 66 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 67 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 34 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 35 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 68 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 69 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 68 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 69 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+      <!-- Item 35 -->
+      <engine file="PB_engine_stage1">  <!-- Engine 36 -->
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <!-- oxi tank for this engine -->
+        <feed> 70 </feed>
+        <!-- fuel tank for this engine -->
+        <feed> 71 </feed>
+        <thruster file="PB_nozzle_stage1">
+        <location unit="IN">
+          <x> &NOZZLE_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        </thruster>
+      </engine>
+
+      <tank type="OXIDIZER">
+        <!-- Tank number 70 (LOX) -->
+        <location unit="IN">
+          <x> &OXI_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &OXI_TANK_DRAIN_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &OXYGEN_TANK_CAPACITY; </capacity>
+        <contents unit="KG"> &OXYGEN_LOAD_STAGE1; </contents>
+      </tank>
+
+      <tank type="FUEL">
+        <!-- Tank number 71 (LH2) -->
+        <location unit="IN">
+          <x> &FUEL_TANK_CENTROID_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+        <drain_location unit="IN">
+          <x> &FUEL_TANK_DRAIN_STATION;  </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </drain_location>
+        <capacity unit="KG"> &FUEL_TANK_CAPACITY; </capacity>
+        <contents unit="KG">  &FUEL_LOAD_STAGE1; </contents>
+      </tank>
+
+</propulsion>
