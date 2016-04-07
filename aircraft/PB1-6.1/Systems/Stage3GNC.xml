@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<system name="Third Stage Guidance and Control">
+
+  <!-- 
+  There is no formal *guidance* yet. Instead, the target yaw rate is simply set to 0, and the target
+  pitch rate (system/constant/pitch-rate) is set in the Executive file. Until the gravity turn time
+  the pitch rate is set to 0. After that, the pitch rate is set and the error between the actual pitch
+  rate and the target rate is determined. This error signal is passed through a PID controller which
+  has been hand-tuned. The output from the PID controller drives the four corner actuators on the
+  stage. The output from the PID controller is limited to 0.0873 radians (5 degrees). TVC is modeled at 
+  bottom, with the actuator properties being set. The actuator properties are:
+
+  propulsion/engine[0]/pitch-angle-rad 
+  propulsion/engine[5]/pitch-angle-rad 
+  propulsion/engine[30]/pitch-angle-rad
+  propulsion/engine[35]/pitch-angle-rad
+
+  propulsion/engine[0]/yaw-angle-rad 
+  propulsion/engine[5]/yaw-angle-rad 
+  propulsion/engine[30]/yaw-angle-rad
+  propulsion/engine[35]/yaw-angle-rad
+
+  These parameters control the actual force direction for the associated engine. Note that the actuator
+  is rate-limited.
+  -->
+
+    <!-- ########################################################## 3rd Stage Pitch Guidance Channel -->
+
+  
+    <!-- ########################################################## 3rd Stage Roll Guidance Channel  -->
+    <channel name="Third Stage Roll Guidance">
+      
+    </channel>
+    
+    <!-- ########################################################## 3rd Stage Yaw Guidance Channel   -->
+    <channel name="Third Stage Yaw Guidance">
+      
+    <summer name="system/guidance/stage3-yaw-error-rad">
+      <bias>  1.57 </bias>
+      <input> -attitude/psi-rad </input>
+    </summer>
+
+    <pid name="system/guidance/stage3-yaw-rate" type="standard">
+      <input> system/guidance/stage3-yaw-error-rad </input>
+      <kp>  0.1 </kp>
+      <ki>  0.1 </ki>
+      <kd>  0.0  </kd>
+      <clipto>
+        <min> -11.873 </min> <!-- limited to +/-5 degrees -->
+        <max>  11.873 </max>
+      </clipto>
+    </pid>
+
+      
+    </channel>
+    
+    <!-- ########################################################## 3rd Stage Pitch Control Channel -->
+
+    <channel name="Third Stage Pitch Rate Control">
+
+      <summer name="system/control/stage3-pitch-rate-error-rad_sec">
+        <input> system/guidance/pitch-rate </input>
+        <input> -velocities/q-rad_sec </input>
+      </summer>
+
+      <pid name="system/control/stage3-pitch-rate-cmd-rad_sec" type="standard">
+        <input> system/control/stage3-pitch-rate-error-rad_sec </input>
+        <kp> -0.10 </kp>
+        <ki>  0.10 </ki>
+        <kd>  0.01   </kd>
+        <clipto>
+          <min> -0.5873 </min> <!-- limited to +/-5 degrees -->
+          <max>  0.5873 </max>
+        </clipto>
+      </pid>
+      
+    </channel>
+    
+    <!-- ########################################################## 3rd Stage Roll Control Channel  -->
+    <channel name="Third Stage Roll Control">
+      
+      <summer name="system/guidance/stage3-roll-error-rad">
+	<bias>  0 </bias>
+	<input> -attitude/phi-rad </input>
+      </summer>
+
+      <pid name="system/guidance/stage3-roll-rate" type="standard">
+	<input> system/guidance/stage3-roll-error-rad </input>
+	<kp>  -0.01 </kp>
+	<ki>  0.00 </ki>
+	<kd>  10.0  </kd>
+	<clipto>
+          <min> -11.873 </min> <!-- limited to +/-5 degrees -->
+          <max>  11.873 </max>
+	</clipto>
+      </pid>
+
+    </channel>
+
+    <!-- ########################################################## 3rd Stage Yaw Control Channel   -->
+    <channel name="Third Stage Yaw Control">
+      
+      <summer name="system/control/stage3-yaw-rate-error-rad_sec">
+        <input> system/guidance/stage3-yaw-rate </input>
+        <input> -velocities/r-rad_sec </input>
+      </summer>
+
+      <pid name="system/control/stage3-yaw-rate-cmd-rad_sec" type="standard">
+        <input> system/control/stage3-yaw-rate-error-rad_sec </input>
+        <kp> -1.2 </kp>
+        <ki>  0.01 </ki>
+        <kd>  0.0 </kd>
+        <clipto>
+          <min> -0.0873 </min> <!-- limited to +/-5 degrees -->
+          <max>  0.0873 </max>
+        </clipto>
+      </pid>
+      
+    </channel>
+
+    <!-- ########################################################## 3rd Stage Thrust Vector Control Channel -->
+    <channel name="Third Stage Thrust Vector Control">
+
+      <actuator name="systems/actuator/engine[2]/pitch-rad">
+        <input> system/control/stage3-pitch-rate-cmd-rad_sec </input>
+        <rate_limit> 2.33 </rate_limit>                          <!-- 100 degrees total in 0.75 sec              -->
+        <!--hysteresis_width> 0.0035 </hysteresis_width-->        <!--  2% of total 10 degree travel, in radians -->
+        <output> propulsion/engine[14]/pitch-angle-rad  </output>
+        <output> propulsion/engine[15]/pitch-angle-rad </output>
+        <output> propulsion/engine[20]/pitch-angle-rad </output>
+        <output> propulsion/engine[21]/pitch-angle-rad </output>
+      </actuator>
+      
+      <actuator name="systems/actuator/engine[2]/yaw-rad">
+        <input> system/control/stage3-yaw-rate-cmd-rad_sec </input>
+        <rate_limit> 2.33 </rate_limit>                     <!-- 100 degrees total in 0.75 sec              -->
+        <!--hysteresis_width> 0.0035 </hysteresis_width-->        <!--  2% of total 10 degree travel, in radians -->
+        <output> propulsion/engine[14]/yaw-angle-rad </output>
+        <output> propulsion/engine[15]/yaw-angle-rad </output>
+      </actuator>
+      
+      <actuator name="systems/actuator/engine[2]/roll1-rad">
+        <input> system/guidance/stage3-roll-rate </input>
+        <rate_limit> 2.33 </rate_limit>                     <!-- 100 degrees total in 0.75 sec              -->
+        <output> propulsion/engine[20]/yaw-angle-rad </output>
+      </actuator>
+      <actuator name="systems/actuator/engine[2]/roll2-rad">
+        <input> -system/guidance/stage3-roll-rate </input>
+        <rate_limit> 2.33 </rate_limit>                     <!-- 100 degrees total in 0.75 sec              -->
+        <output> propulsion/engine[21]/yaw-angle-rad </output>
+      </actuator>
+
+    </channel>
+    
+</system>

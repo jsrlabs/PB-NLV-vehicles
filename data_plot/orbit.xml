@@ -136,7 +136,7 @@
   <plot>
     <title>Accel</title>
     <label axis="x">Time (sec)</label>
-    <label axis="y">Acceleration (ft/s2)</label>
+    <label axis="y">Acceleration (g)</label>
     <scale>auto</scale>
     <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>

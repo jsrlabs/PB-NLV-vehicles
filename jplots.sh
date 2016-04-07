@@ -5,8 +5,8 @@ if [ ! $# == 1 ]; then
   exit
 fi
 
-src/JSBSim scripts/PBScript.xml --outputlogfile=aircraft/$1/$1.csv --aircraft=$1 --initfile=LC39
+src/JSBSim scripts/PBScript.xml --outputlogfile=/tmp/$1.csv --aircraft=$1 --initfile=LC39
 
-src/utilities/prep_plot aircraft/$1/$1.csv --plot=data_plot/orbit.xml  | gnuplot | ps2pdf - aircraft/$1/$1.pdf
-rm aircraft/$1/$1.csv
+src/utilities/prep_plot /tmp/$1.csv --plot=data_plot/orbit.xml  | gnuplot | ps2pdf - aircraft/$1/$1.pdf
+rm /tmp/$1.csv
 evince aircraft/$1/$1.pdf &
