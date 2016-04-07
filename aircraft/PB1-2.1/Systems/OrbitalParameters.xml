@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<system name="Orbital Parameters">
+  
+  <!--
+  This file is an independent file that - when included - provides realtime updates
+  of periapsis and apoapsis during ascent. Values given are in miles. I can't recall
+  where these equations came from, but I believe they are accurate.
+  -->
+  <property value="14.07644180e15"> guidance/executive/gm </property>
+
+  <channel name="Orbital Parameters">
+
+    <fcs_function name="guidance/executive/semimajor-axis-length-ft">
+      <description>
+        This equation calculates the semimajor-axis length in feet. a = mu/(2*mu/r - v^2)
+      </description>
+      <function>
+        <quotient>
+          <p> guidance/executive/gm </p>
+          <difference>
+            <quotient>
+              <product>
+                <v> 2.0 </v>
+                <p> guidance/executive/gm </p>
+              </product>
+              <p> position/radius-to-vehicle-ft </p>
+            </quotient>
+            <pow>
+              <p> velocities/eci-velocity-mag-fps </p>
+              <v> 2.0 </v>
+            </pow>
+          </difference>
+        </quotient>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="guidance/executive/eccentricity">
+      <description>
+        This equation calculates eccentricity. e = sqrt (1 - [ r v cos(gamma) ]^2 / {a * mu})
+      </description>
+      <function>
+        <pow>
+          <difference>
+            <v> 1.0 </v>
+            <quotient>
+              <pow>
+                <product>
+                  <property> position/radius-to-vehicle-ft </property>
+                  <property> velocities/eci-velocity-mag-fps </property>
+                  <cos>
+                    <property> flight-path/gamma-rad </property>
+                  </cos>
+                </product>
+                <v> 2.0 </v>
+              </pow>
+              <product>
+                <p> guidance/executive/semimajor-axis-length-ft </p>
+                <p> guidance/executive/gm </p>
+              </product>
+            </quotient>
+          </difference>
+          <v> 0.5 </v>
+        </pow>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="guidance/executive/apoapsis">
+      <function>
+        <quotient>
+          <difference>
+            <product>
+              <property>guidance/executive/semimajor-axis-length-ft</property>
+              <sum>
+                <value>1</value>
+                <property>guidance/executive/eccentricity</property>
+              </sum>
+            </product>
+            <property>inertial/sea-level-radius_ft</property>
+          </difference>
+          <value>5280</value>
+        </quotient>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="guidance/executive/periapsis">
+      <function>
+        <quotient>
+          <difference>
+            <product>
+              <property>guidance/executive/semimajor-axis-length-ft</property>
+              <difference>
+                <value>1</value>
+                <property>guidance/executive/eccentricity</property>
+              </difference>
+            </product>
+            <property>inertial/sea-level-radius_ft</property>
+          </difference>
+          <value>5280</value>
+        </quotient>
+      </function>
+    </fcs_function>
+
+    <fcs_function name="guidance/executive/downrange-miles">
+      <function>
+        <quotient>
+	  <property> position/distance-from-start-lon-mt </property>
+          <value> 1609.344 </value>
+        </quotient>
+      </function>
+    </fcs_function>
+    
+    <fcs_function name="guidance/executive/altitude-miles">
+      <function>
+        <quotient>
+	  <property> position/h-sl-meters </property>
+          <value> 1609.344 </value>
+        </quotient>
+      </function>
+    </fcs_function>
+
+  </channel>
+
+</system>

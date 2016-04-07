@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <!--
   File:     PB_Engine.xml
   Author:   Jon Berndt, for Paul Breed
@@ -31,6 +31,6 @@
 
 <rocket_engine name="PB_Engine">
   <isp>                   295 </isp>
-  <sloxiflowmax unit="LBS/SEC">  0.557   </sloxiflowmax>
-  <slfuelflowmax unit="LBS/SEC"> 0.079   </slfuelflowmax>
+  <sloxiflowmax unit="LBS/SEC">  0.800   </sloxiflowmax>
+  <slfuelflowmax unit="LBS/SEC"> 0.114   </slfuelflowmax>
 </rocket_engine>

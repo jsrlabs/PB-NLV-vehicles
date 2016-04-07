@@ -1,0 +1,795 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSim.xsl"?>
+<!DOCTYPE fdm_config [ <!-- All measurements belo in inches unless otherwise noted -->
+  <!ENTITY NOZZLE_STATION "220">
+  <!ENTITY ENGINE_CYLINDER_STATION "108">
+  <!ENTITY ENGINE_COL1_Y "-11.25">
+  <!ENTITY ENGINE_COL2_Y " -6.75">
+  <!ENTITY ENGINE_COL3_Y " -2.25">
+  <!ENTITY ENGINE_COL4_Y "  2.25">
+  <!ENTITY ENGINE_COL5_Y "  6.75">
+  <!ENTITY ENGINE_COL6_Y " 11.25">
+  <!ENTITY ENGINE_ROW1_Z "-11.25">
+  <!ENTITY ENGINE_ROW2_Z " -6.75">
+  <!ENTITY ENGINE_ROW3_Z " -2.25">
+  <!ENTITY ENGINE_ROW4_Z "  2.25">
+  <!ENTITY ENGINE_ROW5_Z "  6.75">
+  <!ENTITY ENGINE_ROW6_Z " 11.25">
+  <!ENTITY EMPTY_WEIGHT1 "  4.22">
+  <!ENTITY EMPTY_WEIGHT2 "  4.63">
+  <!ENTITY EMPTY_WEIGHT3 "  4.09">
+]>
+<fdm_config name="PB" version="2.0" release="ALPHA"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
+
+    <fileheader>
+        <author> Jon S. Berndt </author>
+        <filecreationdate> 2015-06-12 </filecreationdate>
+        <version> $Revision: 0.1 $ </version>
+        <description>
+          Orbital launch vehicle model for Paul Breed.
+        </description>
+      <note>
+        - See accompanying file: README.VariousDesignNotes.txt
+        - Note the units when given. Some are in metric, but most are in English.
+      </note>
+    </fileheader>
+
+  <!--
+  METRICS SECTION
+  
+  These are the reference measurements and positions. The reference area is the cross-sectional
+  area of the first stage. After first stage qbar is relatively low, so using the true cross
+  sectional areas for stages 2 and 3 is not critical.
+  The aerodynamic reference point is a very important quantity that can significantly alter the 
+  flight characteristics of the vehicle. Currently (12/12/15), the aerodynamic model consists of 
+  lift and side forces and drag - it's pretty much a 3-DoF model suitable for performance studies,
+  but not necessarily for stability and control studies (as far as aerodynamics is concerned).
+  -->
+
+    <metrics>
+        <wingarea unit="M2"> 0.369 </wingarea> <!-- reference area, cross sectional area -->
+        <wingspan unit="M"> 0.343 </wingspan> <!-- lateral reference length, max diameter -->
+        <chord unit="M"> 5.5 </chord> <!-- longitudinal reference length, length -->
+        <location name="AERORP" unit="IN">
+            <x> 168 </x> <!-- made up number for initial tests  -->
+            <y> 0 </y>
+            <z> 0 </z>
+        </location>
+    </metrics>
+
+  <!--
+  MASS & BALANCE SECTION
+  
+  Units in inches      Diameter:    4 inch             
+                       Spacer:    0.5 inch (guesstimate)
+                     
+  Placement is for forward tip of tube at (0, y, z) - that is, the forward end of the tube is at the origin
+  of the structural frame. For the table below, X (structural frame) is assumed to be positive "aft" (into
+  the page, velocity vector out of the page). Structural Y axis (which also corresponds to the body Y axis)
+  is positive to the right in the table below, and Y is the first element in the number pairs within
+  the parentheses.  Structural Z is positive downward in the table below. 
+
+  Y,Z        1                2                3               4               5                6  
+  1 ( -11.25 -11.25 ) ( -6.75 -11.25 ) ( -2.25 -11.25 ) ( 2.25 -11.25 ) ( 6.75 -11.25 ) ( 11.25 -11.25 )
+  2 ( -11.25  -6.75 ) ( -6.75  -6.75 ) ( -2.25  -6.75 ) ( 2.25  -6.75 ) ( 6.75  -6.75 ) ( 11.25  -6.75 )
+  3 ( -11.25  -2.25 ) ( -6.75  -2.25 ) ( -2.25  -2.25 ) ( 2.25  -2.25 ) ( 6.75  -2.25 ) ( 11.25  -2.25 )
+  4 ( -11.25   2.25 ) ( -6.75   2.25 ) ( -2.25   2.25 ) ( 2.25   2.25 ) ( 6.75   2.25 ) ( 11.25   2.25 )
+  5 ( -11.25   6.75 ) ( -6.75   6.75 ) ( -2.25   6.75 ) ( 2.25   6.75 ) ( 6.75   6.75 ) ( 11.25   6.75 )
+  6 ( -11.25  11.25 ) ( -6.75  11.25 ) ( -2.25  11.25 ) ( 2.25  11.25 ) ( 6.75  11.25 ) ( 11.25  11.25 )
+
+  Engine item index numbers:
+
+   0    6   12   18   24   30
+   1    7   13   19   25   31
+   2    8   14   20   26   32
+   3    9   15   21   27   33
+   4   10   16   22   28   34
+   5   11   17   23   29   35
+             
+               >>>>>>>>>>>>>>>>> +Y 
+               |\
+               | \   
+               |  V  +X axis is into page, out the aft end of the vehicle
+               v
+               +Z
+
+  Engines are numbered from the top left engine (with respect to the above chart), to the bottom engine
+  and from the left column to the right from 0 to 35. The structural frame is a right handed frame with
+  X positive aft, Y positive out the "right wing" and Z completing the frame. The origin of the frame is
+  at the nose of teh vehicle. The <location> element below refers to the middle of the cylinder. Given
+  an 18 foot cylinder, that places the location of the cylinder at 9 feet.
+
+  The pointmass elements represent items that have mass, where the mass elements will be zeroed out at
+  staging. We "disappear the stages" this way.
+
+  -->
+
+    <mass_balance>
+      <!-- Item 0 -->
+      <pointmass name="Engine 1 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 1 -->
+      <pointmass name="Engine 2 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW2_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 2 -->
+      <pointmass name="Engine 3 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 3 -->
+      <pointmass name="Engine 4 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW4_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 4 -->
+      <pointmass name="Engine 5 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW5_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 5 -->
+      <pointmass name="Engine 6 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL1_Y; </y>
+          <z> &ENGINE_ROW6_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 6 -->
+      <pointmass name="Engine 7 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW1_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 7 -->
+      <pointmass name="Engine 8 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW2_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 8 -->
+      <pointmass name="Engine 9 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW3_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 9 -->
+      <pointmass name="Engine 10 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW4_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 10 -->
+      <pointmass name="Engine 11 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW5_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 11 -->
+      <pointmass name="Engine 12 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL2_Y; </y>
+          <z> &ENGINE_ROW6_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 12 -->
+      <pointmass name="Engine 13 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW1_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 13 -->
+      <pointmass name="Engine 14 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 14 -->
+      <pointmass name="Engine 15 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT3; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW3_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 15 -->
+      <pointmass name="Engine 16 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT3; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 16 -->
+      <pointmass name="Engine 17 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 17 -->
+      <pointmass name="Engine 18 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL3_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 18 -->
+      <pointmass name="Engine 19 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW1_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 19 -->
+      <pointmass name="Engine 20 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW2_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 20 -->
+      <pointmass name="Engine 21 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT3; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW3_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 21 -->
+      <pointmass name="Engine 22 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT3; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW4_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 22 -->
+      <pointmass name="Engine 23 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW5_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 23 -->
+      <pointmass name="Engine 24 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL4_Y; </y>
+          <z> &ENGINE_ROW6_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 24 -->
+      <pointmass name="Engine 25 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW1_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 25 -->
+      <pointmass name="Engine 26 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW2_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 26 -->
+      <pointmass name="Engine 27 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW3_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 27 -->
+      <pointmass name="Engine 28 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW4_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 28 -->
+      <pointmass name="Engine 29 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT2; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW5_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 29 -->
+      <pointmass name="Engine 30 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL5_Y; </y>
+          <z> &ENGINE_ROW6_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 30 -->
+      <pointmass name="Engine 31 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW1_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 31 -->
+      <pointmass name="Engine 32 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW2_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 32 -->
+      <pointmass name="Engine 33 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW3_Z; </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 33 -->
+      <pointmass name="Engine 34 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW4_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 34 -->
+      <pointmass name="Engine 35 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW5_Z;  </z>
+        </location>
+      </pointmass>
+
+      <!-- Item 35 -->
+      <pointmass name="Engine 36 system weight">
+        <form shape="tube">
+          <radius unit="IN"> 2 </radius>
+          <length unit="FT"> 18 </length>
+        </form>
+        <weight unit="KG"> &EMPTY_WEIGHT1; </weight>
+        <location unit="IN">
+          <x> &ENGINE_CYLINDER_STATION; </x>
+          <y> &ENGINE_COL6_Y; </y>
+          <z> &ENGINE_ROW6_Z; </z>
+        </location>
+      </pointmass>
+
+    </mass_balance>
+
+  <!--
+  No ground reactions are used in this model.
+  -->
+  
+    <ground_reactions/>
+
+  <!--
+  PROPULSION SECTION
+  
+  The propulsion system (engines and tanks) are described in the accompanying file, Propulsion.xml.
+  -->
+  
+    <propulsion file="Propulsion"/>
+
+  <!-- 
+  SYSTEMS SECTION
+  
+  The following systems are documented internally in the files themselves, but here is a short
+  summary:
+  
+  File: Systems/Executive.xml - Stores various elapsed time and mode parameters (12/12/15 - some of these
+        are not currently used)
+  File: Systems/OrbitalParameters.xml - Calculates periapsis and apoapsis
+  File: Systems/FuelManagement.xml - Calculates fuel flow rates that determine the thrust of the engines.
+  File: Systems/CommonGNC.xml - Calculates some parameters that are common to all three stages, such as 
+        time and pitch attitude schedules.
+  File: Systems/Stage1GNC.xml - Calculates stage 1 pitch and yaw steering guidance and control
+  File: Systems/Stage2GNC.xml - Calculates stage 2 pitch and yaw steering guidance and control
+  File: Systems/Stage3GNC.xml - Calculates stage 3 pitch and yaw steering guidance and control
+  -->
+
+    <system file="Systems/Executive"/>
+    <system file="Systems/OrbitalParameters"/>
+    <system file="Systems/FuelManagement"/>
+    <system file="Systems/CommonGNC"/>
+    <system file="Systems/Stage1GNC"/>
+    <system file="Systems/Stage2GNC"/>
+    <system file="Systems/Stage3GNC"/>
+  
+  <!-- 
+  AERODYNAMICS SECTION
+  
+  This section models aerodynamics for this launch vehicle. Drag is modeled from the technical document:
+  
+  "DRAG COEFFICIENTS OF SEVERAL BODIES OF REVOLUTION AT TRANSONIC AND SUPERSONIC VELOCITY"
+  ASD-TDR-63-663, SEPTEMBER 1964, Link: http://lhldigital.lindahall.org/cdm/ref/collection/parachute/id/657
+  
+  
+  The lift and side force coefficients are re-used from a previous rocket, as no values were supplied. 
+  
+  The placement of the aerodynamic center and the fidelity aerodynamic coefficients will be very important for
+  any stability and control studies done. Small changes in the location of the aerodynamic center could
+  significantly affect stability and control.
+  
+  --> 
+    <aerodynamics>
+
+      <axis name="DRAG">
+
+        <function name="aero/force/drag">
+          <description>Drag_minimum</description>
+          <product>
+            <property>aero/qbar-psf</property>
+            <property>metrics/Sw-sqft</property>
+            <table name="aero/coefficient/CD_min">
+              <independentVar>velocities/mach</independentVar>
+              <tableData>
+                0.60  0.20
+                0.90  0.20
+                1.00  0.25
+                1.10  0.40
+                1.20  0.55
+                1.30  0.65
+                2.00  0.43
+                3.00  0.40
+              </tableData>
+            </table>
+          </product>
+        </function>
+      </axis>
+
+      <axis name="SIDE">
+        <function name="aero/force/side">
+          <description>Side force due to beta</description>
+          <product>
+            <property>aero/qbar-psf</property>
+            <property>metrics/Sw-sqft</property>
+            <property>aero/beta-rad</property>
+            <table name="aero/coefficient/CY_beta">
+              <independentVar>velocities/mach</independentVar>
+              <tableData>
+                0.0000        -4.5000
+                9.0000        -1.0000
+              </tableData>
+            </table>
+          </product>
+        </function>
+      </axis>
+
+      <axis name="LIFT">
+        <function name="aero/force/list">
+          <description>Lift force due to alpha</description>
+          <product>
+            <property>aero/qbar-psf</property>
+            <property>metrics/Sw-sqft</property>
+            <property>aero/alpha-rad</property>
+            <table name="aero/coefficient/CL_alpha">
+              <independentVar>velocities/mach</independentVar>
+              <tableData>
+                0.0000        4.5000
+                9.0000        1.0000
+              </tableData>
+            </table>
+          </product>
+        </function>
+      </axis>
+
+      <axis name="ROLL">
+      </axis>
+
+      <axis name="PITCH">
+      </axis>
+
+      <axis name="YAW">
+      </axis>
+
+    </aerodynamics>
+
+  <!--
+  OUTPUT SECTION
+  
+  Turn on/off various output sections below or add new properties. Change the logging rate as 
+  needed (the rate below is in Hz.) 
+  -->
+  
+
+    <output name="PB.csv" type="CSV" rate="10">
+      <simulation> ON </simulation>
+      <atmosphere> ON </atmosphere>
+      <massprops> ON </massprops>
+      <aerosurfaces> OFF </aerosurfaces>
+      <rates> ON </rates>
+      <velocities> ON </velocities>
+      <forces> ON </forces>
+      <moments> ON </moments>
+      <position> ON </position>
+      <propulsion> OFF </propulsion>
+      <fcs> ON </fcs>
+      <ground_reactions> ON </ground_reactions>
+      <coefficients> OFF </coefficients>
+      <property> aero/qbar-psf </property>
+      <property> propulsion/engine[1]/fuel-flow-rate-pps </property>
+      <property> propulsion/engine[1]/oxi-flow-rate-pps </property>
+      <property> propulsion/engine[1]/thrust-lbs </property>
+      <property> propulsion/engine[8]/thrust-lbs </property>
+      <property> propulsion/engine[15]/thrust-lbs </property>
+      <property> propulsion/tank[1]/pct-full </property>
+      <property> propulsion/tank[15]/pct-full </property>
+      <property> propulsion/tank[29]/pct-full </property>
+      <property> system/fms/stage1_Ptank </property>
+      <property> system/fms/stage2_Ptank </property>
+      <property> system/fms/stage3_Ptank </property>
+      <property> propulsion/tank[1]/contents-lbs </property>
+      <property> propulsion/tank[2]/contents-lbs </property>
+      <property> propulsion/tank[15]/contents-lbs </property>
+      <property> propulsion/tank[29]/contents-lbs </property>
+      <property> system/fms/stage1_tank_depleted </property>
+      <property> system/fms/stage2_tank_depleted </property>
+      <property> system/fms/stage3_tank_depleted </property>
+      <property> system/fms/tank_depleted </property>
+      <property> guidance/executive/downrange-miles </property>
+      <property> guidance/executive/altitude-miles </property>
+
+      <property> accelerations/n-pilot-x-norm </property>
+      <property> accelerations/n-pilot-y-norm </property>
+      <property> accelerations/n-pilot-z-norm </property>
+
+    </output>
+
+</fdm_config>
