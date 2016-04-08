@@ -49,6 +49,7 @@
         <min> -11.873 </min> <!-- limited to +/-5 degrees -->
         <max>  11.873 </max>
       </clipto>
+      <trigger> system/guidance/stage3-flight-flag </trigger>
     </pid>
 
       
@@ -72,6 +73,7 @@
           <min> -0.5873 </min> <!-- limited to +/-5 degrees -->
           <max>  0.5873 </max>
         </clipto>
+	<trigger> system/guidance/stage3-flight-flag </trigger>
       </pid>
       
     </channel>
@@ -114,6 +116,7 @@
           <min> -0.0873 </min> <!-- limited to +/-5 degrees -->
           <max>  0.0873 </max>
         </clipto>
+	<trigger> system/guidance/stage3-flight-flag </trigger>
       </pid>
       
     </channel>

@@ -50,6 +50,7 @@
         <min> -11.873 </min> <!-- limited to +/-5 degrees -->
         <max>  11.873 </max>
       </clipto>
+      <trigger> system/guidance/stage2-flight-flag </trigger>
     </pid>
 
       
@@ -107,6 +108,7 @@
           <min> -0.0873 </min> <!-- limited to +/-5 degrees -->
           <max>  0.0873 </max>
         </clipto>
+	<trigger> system/guidance/stage2-flight-flag </trigger>
       </pid>
       
       <switch name="system/control/stage2-yaw-rate-cmd-final-rad_sec">

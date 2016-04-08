@@ -17,7 +17,7 @@
   <!ENTITY ENGINE_ROW6_Z " 11.25">
   <!ENTITY EMPTY_WEIGHT1 "  4.22">
   <!ENTITY EMPTY_WEIGHT2 "  4.63">
-  <!ENTITY EMPTY_WEIGHT3 "  4.63">
+  <!ENTITY EMPTY_WEIGHT3 "  4.36">
 ]>
 <fdm_config name="PB" version="2.0" release="ALPHA"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

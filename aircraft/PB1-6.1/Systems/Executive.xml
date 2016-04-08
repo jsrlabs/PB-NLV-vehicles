@@ -18,6 +18,8 @@
   <property value="0">   guidance/executive/mode </property>
   <property value="0">   guidance/constant/grav_turn_time </property>
   <property value="510"> guidance/constant/total_burn_time </property>
+  <property value="1">   system/guidance/stage2-flight-flag </property>
+  <property value="1">   system/guidance/stage3-flight-flag </property>
 
 
   <!-- ##################################################################### -->
@@ -88,5 +90,26 @@
     </distributor>
       
   </channel-->
+
+  <channel name="Major Vehicle Configuration Discrete Actions">
+
+    <switch name="system/guidance/stage2-flight-flag-switch">
+      <default value="1"/>
+      <test value="0">
+	fcs/throttle-cmd-norm[1] eq 1.0
+      </test>
+      <output> system/guidance/stage2-flight-flag </output>
+    </switch>
+
+    <switch name="system/guidance/stage3-flight-flag-switch">
+      <default value="1"/>
+      <test value="0">
+	fcs/throttle-cmd-norm[2] eq 1.0
+	propulsion/engine[7]/thrust-lbs lt 1.0
+      </test>
+      <output> system/guidance/stage3-flight-flag </output>
+    </switch>
+
+  </channel>
 
 </system>
