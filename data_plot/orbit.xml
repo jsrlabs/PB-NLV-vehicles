@@ -121,6 +121,8 @@
     <min axis="x">-1</min>
     <parameter axis="x">Time</parameter>
     <parameter axis="y">F_{Prop x} (lbs)</parameter>
+    <parameter axis="y">F_{Prop y} (lbs)</parameter>
+    <parameter axis="y">F_{Prop z} (lbs)</parameter>
   </plot>
 
   <plot>

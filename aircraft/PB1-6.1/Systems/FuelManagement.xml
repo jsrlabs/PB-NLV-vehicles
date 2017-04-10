@@ -92,7 +92,32 @@
         oxidizer and fuel) as far as *percentage* fill goes, so the 1st fuel
         tank is used as the "indexer" tank to determine current fill 
         quantity.
-          
+
+from https://en.wikipedia.org/wiki/Adiabatic_process
+  P/P0 = (V0/V)^gamma
+
+from https://en.wikipedia.org/wiki/Orifice_plate
+  P1 - P2 = 0.5 * rho * V2^2 - 0.5 * rho * V1^2
+
+  Pdrop ~ mdot^2
+  Pdrop / Pdrop0 = mdot^2 / mdot0^2
+
+  Pchamber = Ptank - Pdrop
+
+  Pchamber = Ptank - Pdrop0 * mdot^2 / mdot0^2
+
+from http://www.grc.nasa.gov/WWW/k-12/airplane/rktthsum.html
+  Pchamber ~ mdot
+
+  Pch / Pch0 = mdot / mdot0
+
+  mdot / mdot0 = (Ptank - Pdrop0 * mdot^2 / mdot0^2) / (Ptank0 - Pdrop0)
+
+solving the quadratic for mdot/mdot0
+
+  mdot / mdot0 = (-1 + sqrt(1 - 4 * (Pdrop0 / (Ptank0 - Pdrop0)) * (- Ptank / (Ptank0 - Pdrop0)))) / (2 * (Pdrop0 / (Ptank0 - Pdrop0)))
+
+
         press_factor = ((1-current_fill_percent)/(1-initial_fill_percent))^gamma
 
         flow_rate_factor = (Ptank - (Pdrops_initial * flow_rate_factor^2) / (Ptank_initial - Pdrops_initial)
@@ -101,8 +126,6 @@ rearranged:
         0 = (Pdrops_initial / (Ptank_initial - Pdrops_initial)) * flow_rate_factor^2 + flow_rate_factor - Ptank / (Ptank_initial - Pdrops_initial)
 
 solved using quadratic:
-        flow_rate_factor = (-1 + sqrt(1 - 4 * (Pdrops_initial / (Ptank_initial - Pdrops_initial)) * (- Ptank / (Ptank_initial - Pdrops_initial)))) / 2 * (Pdrops_initial / (Ptank_initial - Pdrops_initial))
-
         flow_rate_factor = (-1 + sqrt(1 - 4 * (Pdrops_initial / (Ptank_initial - Pdrops_initial)) * (- Ptank / (Ptank_initial - Pdrops_initial)))) / 2 * (Pdrops_initial / (Ptank_initial - Pdrops_initial))
 
         throttle_position = throttle_command * minimum(1, flow_rate_factor)

@@ -16,6 +16,8 @@
 *** 1 sec faster with logging turned off
 ** test different dt's
 ** validate sim using Vanguard data
+** publish Vanguard sim for PSAS
+** look at natronics
 ** squawk: removing integrator settings in PBScript.xml causes change in apogee
 ** if needed, use CEA to make map of engine Isp vs O/F or other parameters
 ** ability to easily enter vehicle configuration
@@ -26,7 +28,12 @@
 ** DONE capture tank pct-full at startup
 ** DONE cleanup PBScript, replace hokey simtime >= 150 check with arming.  try delay
 * model development plan
-** why is Paul's burnout thrust lower than the model's? 
+** try prepending custom hardcoded DOCTYPE to xml (loaded from PB.xml or Propulstion.xml) https://stackoverflow.com/questions/991864/creating-a-doctype-with-lxmls-etree/2858690#2858690
+** or try alternate xml parser https://stackoverflow.com/a/2155040
+** or try xmlproc DTD api https://stackoverflow.com/a/2148315
+** why is Paul's burnout thrust lower than the model's?
+** read http://www.public.iastate.edu/~aero311l/blowdown.pdf
+** read http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20150015771.pdf
 ** check on oscillations at staging
 oscillates around +/- alpha.  aerodynamically stable!?!
 ** check on pressurant gas mass for fills: 40% 50% 75%

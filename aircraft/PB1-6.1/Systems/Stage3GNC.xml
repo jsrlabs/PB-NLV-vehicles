@@ -83,18 +83,19 @@
       
       <summer name="system/guidance/stage3-roll-error-rad">
 	<bias>  0 </bias>
-	<input> -attitude/phi-rad </input>
+        <input> velocities/p-rad_sec </input>
       </summer>
 
       <pid name="system/guidance/stage3-roll-rate" type="standard">
 	<input> system/guidance/stage3-roll-error-rad </input>
-	<kp>  -0.01 </kp>
-	<ki>  0.00 </ki>
-	<kd>  10.0  </kd>
+	<kp>  20.1 </kp>
+	<ki>  20.1 </ki>
+	<kd>  0.0  </kd>
 	<clipto>
           <min> -11.873 </min> <!-- limited to +/-5 degrees -->
           <max>  11.873 </max>
 	</clipto>
+	<trigger> system/guidance/stage3-flight-flag </trigger>
       </pid>
 
     </channel>
