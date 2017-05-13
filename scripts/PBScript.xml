@@ -19,7 +19,7 @@
     
   </description>
   
-  <use aircraft="PB" initialize="LC39"/>
+  <use aircraft="PB1-6.1" initialize="LC39"/>
   <run start="0.0" end="2000" dt="0.0083333333333333333">
 
     <property> simulation/notify-time-trigger </property>
